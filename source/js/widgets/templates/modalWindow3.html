@@ -1,0 +1,23 @@
+<div class="modal uncrd-modal-fix" data-uncrd="style:position">
+	<div class="modal-header" data-uncrd="event:{mousedown:dragStart}">
+		<button type="button" class="close" data-uncrd="event:{click:destroy,mousedown:preventDrag}">×</button>
+			<h3 data-uncrd="widget:headerWidget,visible:headerWidget"></h3>
+			<h3 data-uncrd="html:header,visible:!headerWidget()"></h3>
+	</div>
+	<!-- uncrd if: content -->
+		<div class="modal-body" data-uncrd="html:content"></div>
+	<!-- /uncrd -->
+	<!-- uncrd ifnot: content -->
+		<div class="modal-body" data-uncrd="widget:pageWidgetBinding"></div>
+	<!-- /uncrd -->
+	<div class="modal-footer">
+		<!-- uncrd if: footerWidget -->
+			<!-- uncrd widget: footerWidget --><!-- /uncrd -->
+		<!-- /uncrd -->
+		<!-- uncrd ifnot: footerWidget -->
+			<!-- uncrd foreach: buttons -->
+				<button class="btn" data-uncrd="click:action.bind($parent),css:css,text:text"></button>
+			<!-- /uncrd -->
+		<!-- /uncrd -->
+	</div>
+</div>

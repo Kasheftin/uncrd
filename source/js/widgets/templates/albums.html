@@ -1,0 +1,35 @@
+<!-- uncrd if: showHeader -->
+	<div class="uncrd-header clearfix">
+		<div class="pull-left">
+			<a href="#" data-uncrd="css:{visible:!unlimited(),'icon-uncrd-arrow-right':showEnabled(),'icon-uncrd-arrow-down':!showEnabled()},click:showSwitch"></a>
+			<strong class="uncrd-header-text">Альбомы <span data-uncrd="text:header"></span></strong>
+		</div>
+		<div class="pull-right">
+			<a href="#" data-uncrd="click:showMore,visible:showEnabled">Показать альбомы</a>
+			<!-- uncrd if: uploadPhotoEnabled -->
+				<a href="#" data-uncrd="click:core.open.bind($data,{name:'uploadPhoto',windowName:'uploadPhoto'}),text:addHeader"></a>
+			<!-- /uncrd -->
+		</div>
+	</div>
+<!-- /uncrd -->
+<!-- uncrd if: loading -->
+	<div class="uncrd-loading-with-icon">Загрузка...</div>
+<!-- /uncrd -->
+<!-- uncrd ifnot: loading -->
+	<div class="uncrd-block">
+		<div class="alert alert-info" data-uncrd="visible:albums().length==0">Альбомов нет</div>
+		<ul class="thumbnails" data-uncrd="foreach:albumsLimited">
+			<li class="span2">
+				<a class="thumbnail" href="#" data-uncrd="click:open">
+					<img class="uncrd-thumb-fix" data-uncrd="attr:{src:photo.src_clip5}" />
+				</a>
+			</li>
+		</ul>
+		<div class="uncrd-profile-more-group" data-uncrd="visible:showMoreEnabled() || showLessEnabled()">
+			<a class="uncrd-profile-more-white" href="#" data-uncrd="click:showAll,visible:showMoreEnabled">Показать все</a>
+			<a href="#" data-uncrd="click:showMore,visible:showMoreEnabled">Показать еще</a>
+			<a href="#" data-uncrd="click:showLess,visible:showLessEnabled">Свернуть</a>
+			<a class="uncrd-profile-more-white" href="#" data-uncrd="click:showNone,visible:showLessEnabled">Свернуть все</a>
+		</div>
+	</div>
+<!-- /uncrd -->

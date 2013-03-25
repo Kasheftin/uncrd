@@ -1,0 +1,19 @@
+<!-- uncrd if: my -->
+	<div class="uncrd-statusText" data-uncrd="visible:!changingStatus()"><a href="#" data-uncrd="click:openForm,text:status"></a></div>
+	<div data-uncrd="visible:changingStatus">
+		<form data-uncrd="submit:send">
+			<input class="input-block-level" data-uncrd="value:status">
+			<span data-uncrd="visible:!loading()">
+				<button type="submit" class="btn">Отправить</button>
+				<button type="submit" class="btn" data-uncrd="click:cancel">Отмена</button>
+			</span>
+			<span data-uncrd="visible:loading">
+				<a class="btn disabled" href="#"><i class="uncrd-loading-i-icon"></i> Отправляем...</a>
+				<button class="btn" data-uncrd="click:cancelSend">Отменить</button>
+			</span>
+		</form>
+	</div>
+<!-- /uncrd -->
+<!-- uncrd ifnot: my -->
+	<div class="uncrd-statusText" data-uncrd="text:status"></div>
+<!-- /uncrd -->

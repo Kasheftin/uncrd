@@ -1,0 +1,14 @@
+<!-- uncrd if: loading -->
+	<div class="uncrd-loading-with-icon">Загрузка...</div>
+<!-- /uncrd -->
+<!-- uncrd ifnot: loading -->
+	<form data-uncrd="submit:form.send">
+		<!-- uncrd if: data() && data().user -->
+			<label>Получатель: </label>
+			<input type="text" class="input-block-level" data-uncrd="value:data().user.name" disabled="">
+		<!-- /uncrd -->
+		<label for="messageText">Сообщение: </label>
+		<textarea id="messageText" class="input-block-level" data-uncrd="value:form.text,valueUpdate:'afterkeydown',executeOnEnter:form.send"></textarea>
+		<span class="help-block">Нажмите CTRL+Enter чтобы отправить сообщение</span>
+	</form>
+<!-- /uncrd -->

@@ -1,0 +1,37 @@
+<form class="form-horizontal form-inline uncrd-form-fix" data-uncrd="submit:form.send">
+    <div class="row">
+        <!-- uncrd foreach: anket -->
+            <div class="span5">
+                <fieldset>
+                    <legend data-uncrd="text:name"></legend>
+                    <!-- uncrd foreach: {data:data,as:'rw'} -->
+                        <div class="control-group uncrd-control-group-fix">
+                            <label class="control-label" data-uncrd="text:rw.name"></label>
+                            <div class="controls">
+                                <!-- uncrd if: rw.type.match(/choose/) -->
+                                    <!-- uncrd foreach: {data:rw.opts,as:'opt'} -->
+                                        <label class="checkbox"><input type="checkbox" data-uncrd="checked:rw.values[$index]"><span data-uncrd="text:opt"></span></label>
+                                    <!-- /uncrd -->
+                                <!-- /uncrd -->
+                                
+                                <!-- uncrd if: rw.type.match(/select/) -->
+                                    <!-- uncrd foreach: {data:rw.opts,as:'opt'} -->
+                                        <label class="radio"><input type="radio" data-uncrd="checked:rw.values[$index]"><span data-uncrd="text:opt"></span></label>
+                                    <!-- /uncrd -->
+                                <!-- /uncrd -->
+
+                                <!-- uncrd if: rw.type.match(/text/) -->
+                                    <input type="text" class="span2" data-uncrd="value:rw.text">
+                                <!-- /uncrd -->
+
+                                <!-- uncrd if: rw.type.match(/int/) -->
+                                    <input type="number" class="span1" data-uncrd="value:rw.num">
+                                <!-- /uncrd -->
+                            </div>
+                        </div>
+                    <!-- /uncrd -->
+                </fieldset>
+            </div>
+        <!-- /uncrd -->
+    </div>
+</form>

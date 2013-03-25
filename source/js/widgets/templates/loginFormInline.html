@@ -1,0 +1,9 @@
+<form class="form-inline" data-uncrd="submit:auth.loginForm.submit,popover:auth.loginForm.popover">
+	<input type="text" class="input-small" placeholder="Логин" name="login" data-uncrd="value:auth.loginForm.login,valueUpdate:'afterkeydown'">
+	<input type="password" class="input-small" placeholder="Пароль" name="password" data-uncrd="value:auth.loginForm.password,valueUpdate:'afterkeydown'">
+	<label class="checkbox">
+		<input type="checkbox" name="rememberme" data-uncrd="checked:auth.loginForm.rememberme"> Запомнить меня
+	</label>
+	<button type="submit" class="btn" data-uncrd="enable:auth.loginForm.signinEnabled">Войти</button>
+    <div data-uncrd="visible:auth.loginForm.loading" class="uncrd-loading"></div>
+</form>

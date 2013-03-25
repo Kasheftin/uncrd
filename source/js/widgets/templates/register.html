@@ -1,0 +1,50 @@
+<form class="form-horizontal" data-uncrd="submit:submit,popover:popover">
+    <fieldset>
+        <legend data-uncrd="visible:title().length>0,text:title"></legend>
+        <div class="control-group uncrd-control-group-fix" data-uncrd="css:loginValidator().type">
+            <input class="span3" type="text" placeholder="Логин" data-uncrd="value:instLogin,valueUpdate:'afterkeydown'">
+            <span class="help-inline" data-uncrd="html:loginValidator().message"></span>
+            <span class="help-inline" data-uncrd="visible:loginValidator().ok"><i class="icon-ok"></i> OK!</span>
+            <span class="help-inline" data-uncrd="visible:loginValidator().loading"><i class="uncrd-loading-i-icon"></i></span>
+        </div>
+        <div class="control-group" data-uncrd="css:emailValidator().type">
+            <input class="span3" type="text" placeholder="E-mail" data-uncrd="value:instEmail,valueUpdate:'afterkeydown'">
+            <span class="help-inline" data-uncrd="html:emailValidator().message"></span>
+            <span class="help-inline" data-uncrd="visible:emailValidator().ok"><i class="icon-ok"></i> OK!</span>
+        </div>
+        <div class="control-group" data-uncrd="css:passwordValidator().type">
+            <input class="span3" type="password" placeholder="Пароль" data-uncrd="value:instPassword,valueUpdate:'afterkeydown'">
+            <span class="help-inline" data-uncrd="html:passwordValidator().message"></span>
+            <span class="help-inline" data-uncrd="visible:passwordValidator().ok"><i class="icon-ok"></i> OK!</span>
+        </div>
+        <div class="control-group controls-row" data-uncrd="css:nameValidator().type">
+            <input class="span1_5" type="text" placeholder="Имя" data-uncrd="value:instName,valueUpdate:'afterkeydown'">
+            <input class="span1_5" type="text" placeholder="Фамилия" data-uncrd="value:instSurname,valueUpdate:'afterkeydown'">
+            <span class="help-inline" data-uncrd="html:nameValidator().message"></span>
+            <span class="help-inline" data-uncrd="visible:nameValidator().ok"><i class="icon-ok"></i> OK!</span>
+        </div>
+        <div class="control-group" data-uncrd="css:birthValidator().type">
+            <span><label>Дата рождения:</label></span>
+            <div class="row">
+                <div class="span3">
+                    <select class="span1 uncrd-select-day" data-uncrd="value:birthDay,options:birthDays,optionsCaption:'--'"></select>
+                    <select class="span1 uncrd-select-month" data-uncrd="value:birthMonth,options:birthMonths,optionsCaption:'----',optionsText:'name',optionsValue:'id'"></select>
+                    <select class="span1 uncrd-select-year" data-uncrd="value:birthYear,options:birthYears,optionsCaption:'----'"></select>
+                </div>
+                <span class="help-inline" data-uncrd="visible:birthValidator().ok"><i class="icon-ok"></i> OK!</span>
+            </div>
+        </div>
+        <div class="control-group" data-uncrd="css:sexValidator().type">
+            <div class="row">
+                <div class="span3">
+                    <label class="pull-left">Пол:</label>
+                    <label class="radio span"><input type="radio" name="sex" data-uncrd="checked:sex" value="1" /> муж.</label>
+                    <label class="radio span"><input type="radio" name="sex" data-uncrd="checked:sex" value="2" /> жен.</label>
+                </div>
+                <span class="help-inline" data-uncrd="visible:sexValidator().ok"><i class="icon-ok"></i> OK!</span>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary" data-uncrd="enable:formIsValid">Зарегистрироваться</button>
+        <div data-uncrd="visible:loading" class="uncrd-loading"></div>
+    </fieldset>
+</form>

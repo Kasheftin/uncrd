@@ -1,0 +1,34 @@
+<!-- uncrd if: loading -->
+	<div class="uncrd-loading-with-icon">Загрузка...</div>
+<!-- /uncrd -->
+<!-- uncrd ifnot: loading -->
+	<!-- uncrd if: core.user -->
+		<!-- uncrd if: core.user().just_registered -->
+			<div class="alert alert-success clearfix">
+				<p>
+					Благодарим за регистрацию, теперь Вам доступны все возможности системы.
+					Для начала Вы можете посетить <a href="#">страницу своего профиля</a> и <a href="#">добавить свои контактные данные</a>.
+				</p>
+			</div>
+		<!-- /uncrd -->
+		<!-- uncrd if: parseInt(core.user().photo_exist) == 0 -->
+			<div class="alert alert-info clearfix">
+				<p>Пользователи сайта будут к вам испытывать гораздо большее доверие, если Вы загрузите свою фотографию.</p>
+				<div class="pull-right">
+					<button class="btn btn-primary">Загрузить фотографию</button>
+					<button class="btn">Больше не показывать</button>
+				</div>
+			</div>
+		<!-- /uncrd -->
+		<!-- uncrd with: autoGeoLocation -->
+			<div class="alert alert-info clearfix">
+				<p>В вашем профиле не было указано Ваше географическое положение. Оно было проставлено автоматически: 
+				<strong data-uncrd="text:locationText"></strong></p>
+				<div class="pull-right">
+					<button class="btn">Изменить информацию</button>
+					<button class="btn">Больше не показывать</button>
+				</div>
+			</div>
+		<!-- /uncrd -->
+	<!-- /uncrd -->
+<!-- /uncrd -->
