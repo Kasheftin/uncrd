@@ -20,14 +20,12 @@ define(["jquery","knockout"], function($,ko) {
 		// mode=context - показывать альбом, mode=default - показывать одно фото
 		this.mode = ko.observable(o.options.mode || "default");
 
-		var routerUpdater = ko.computed(function() {
+		this.routerUpdater = ko.computed(function() {
 			if (self.mode() != "default")
 				self.core.router.set({name:"photo",id:self.photoId(),mode:self.mode()});
 			else
 				self.core.router.set({name:"photo",id:self.photoId()});
-			self.modalWindow.recalculatePositionTrue();
-			self.modalWindow.leftBackdropAction(null);
-		});
+		}).extend({throttle:200});
 
 		this.photos = ko.observableArray([]);
 		this.photosCnt = ko.computed(function() {
@@ -53,6 +51,7 @@ define(["jquery","knockout"], function($,ko) {
 		this.photosCnt = 0;
 
 		this.photo = ko.computed(function() {
+
 			if (!self.photosAssoc() || !self.photoId() || self.photoId() == 0) return null;
 			var rw = self.photosAssoc()[self.photoId()];
 

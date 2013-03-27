@@ -11,10 +11,7 @@ define(["knockout"],function(ko) {
 		this.contextName = this.photoPage.photoContextName;
 		this.contextUser = this.photoPage.photoContextUser;
 		this.photosCnt = this.photoPage.photosCnt;
-
-		this.openContext = function() {
-			self.mode("context");
-		}
+		this.openContext = this.photoPage.openContext;
 
 		this.openUser = function(context,e) {
 			if (self.contextUser)
