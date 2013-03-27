@@ -6,9 +6,10 @@ define(["jquery","knockout"], function($,ko) {
 
 		this.to_id = this.asObservable(d.to_id,0);
 		this.data = this.asObservable(d.data,{});
+		this.showSubmitButton = this.asObservable(d.showSubmitButton,false);
 
 		this.loading = ko.observable(false);
-		this.modalWindow = o.options.modalWindow;
+		this.modalWindow = d.modalWindow;
 
 		this.loadData = function() {
 			self.loading(true);
@@ -66,7 +67,8 @@ define(["jquery","knockout"], function($,ko) {
 						self.form.loading(false);
 						if (result.success) {
 							self.core.open({name:"alert",windowName:"alert",type:"info",message:result.success});
-							self.modalWindow.destroy();
+							if (self.modalWindow)
+								self.modalWindow.destroy();
 						}
 						if (result.error) {
 							self.core.error(result.error);
@@ -88,11 +90,12 @@ define(["jquery","knockout"], function($,ko) {
 			}
 		}
 
-		this.modalWindow.footerWidget({
-			name: "messageFormFooter",
-			modalWindow: self.modalWindow,
-			form: self.form
-		});
+		if (this.modalWindow)
+			this.modalWindow.footerWidget({
+				name: "messageFormFooter",
+				modalWindow: self.modalWindow,
+				form: self.form
+			});
 	}
 
 	return MessageForm;

@@ -10,5 +10,19 @@
 		<label for="messageText">Сообщение: </label>
 		<textarea id="messageText" class="input-block-level" data-uncrd="value:form.text,valueUpdate:'afterkeydown',executeOnEnter:form.send"></textarea>
 		<span class="help-block">Нажмите CTRL+Enter чтобы отправить сообщение</span>
+		<!-- uncrd if: showSubmitButton -->
+			<div class="clearfix">
+				<!-- uncrd if: core.user() -->
+					<a href="#" data-uncrd="click:core.open.bind($data,{name:'messageRow',to_id:form.to_id(),loading:'before',windowName:'messages'})">Показать историю переписки</a>
+				<!-- /uncrd -->
+				<span data-uncrd="visible:!form.loading()">
+					<button class="btn btn-primary" data-uncrd="enable:form.text().length>0,click:form.send">Написать</button>
+				</span>
+				<span data-uncrd="visible:form.loading">
+					<a class="btn disabled" href="#"><i class="uncrd-loading-i-icon"></i> Отправляем...</a>
+					<button class="btn" data-uncrd="click:form.cancelSend">Отменить</button>
+				</span>
+			</div>
+		<!-- /uncrd -->
 	</form>
 <!-- /uncrd -->

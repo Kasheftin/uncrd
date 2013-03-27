@@ -37,7 +37,8 @@ define(["jquery","knockout"], function($,ko) {
 					core: self.core,
 					gotoUserProfile: function(context,e) {
 						self.core.open({name:"profile",id:rw.id,loading:"after",callback: function() {
-							self.modalWindow.destroy();
+							if (self.modalWindow)
+								self.modalWindow.destroy();
 						}},context,e);
 					},
 					gotoUserFriends: function(context,e) {
@@ -178,7 +179,8 @@ define(["jquery","knockout"], function($,ko) {
 				},
 				success: function(result) {
 					if (result.success) {
-						self.modalWindow.width(700);
+						if (self.modalWindow)
+							self.modalWindow.width(700);
 						self.core.updateCommon(result.data.commonData);
 						$.each(result.data.users,function(id,rw) {
 							// Генерим cityText, он нужен для формы поиска
