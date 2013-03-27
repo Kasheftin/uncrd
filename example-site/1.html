@@ -9,8 +9,8 @@
 	<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
-	<link href="/lib/bootstrap-2.3.1-13px-linkColor/css/bootstrap.min.css" rel="stylesheet" />
-	<link href="/css/s.css" rel="stylesheet" />
+	<link href="lib/bootstrap-2.3.1-13px-linkColor/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="css/s.css" rel="stylesheet" />
 </head>
 <body>
 
@@ -119,6 +119,23 @@
 					</tr>
 				</tbody>
 			</table>
+
+			<h1>Блоки</h1>
+
+			<h3>Список альбомов</h3>
+			<div data-uncrd="widget:{name:'albums',to_id:10558,limit:10,limitStep:5}"></div>
+
+			<h3>Стена пользователя</h3>
+			<div data-uncrd="widget:{name:'stena',to_id:10569,limit:3,limitStep:3,order:'desc'}"></div>
+
+			<h3>Список друзей</h3>
+			<div data-uncrd="widget:{name:'userlist',to_id:10569}"></div>
+
+			<h3>Блок комментариев к фото</h3>
+			<div data-uncrd="widget:{name:'stena',actions:{get:'getPhotoComments',create:'createPhotoComment'},to_id:366879,unlimited:true,showHeader:false,to:0,addCommentHeader:'Ваш комментарий'}"></div>
+
+			<h3>Отправить сообщение пользователю</h3>
+			<div data-uncrd="widget:{name:'messageForm',to_id:61785,showSubmitButton:true}"></div>
 
 		</div>
 	</div>
