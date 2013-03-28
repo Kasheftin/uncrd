@@ -3,11 +3,11 @@
 <!-- /uncrd -->
 <!-- uncrd ifnot: loading -->
 	<!-- uncrd if: data -->
-		<!-- uncrd if: isFriend -->
+		<!-- uncrd if: action == "remove" -->
 			<div><strong>Внимание!</strong></div>
 			<div>Вы собираетесь убрать пользователя <span data-uncrd="text:data().name"></span> из списка ваших друзей.</div>
 		<!-- /uncrd -->
-		<!-- uncrd ifnot: isFriend -->
+		<!-- uncrd if: action == "add" -->
 			<div>Вы собираетесь добавить пользователя <span data-uncrd="text:data().name"></span> в список ваших друзей.</div>
 			<form data-uncrd="submit:form.send">
 				<label for="messageForm">Вы можете представиться и оставить свое приветствие:</label>

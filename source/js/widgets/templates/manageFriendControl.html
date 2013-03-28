@@ -1,0 +1,14 @@
+<!-- uncrd ifnot: isMy -->
+	<!-- uncrd if: type == "link" && isFriend() -->
+		<a href="#" data-uncrd="css:css,click:core.open.bind($data,remParams),text:remText"></a>
+	<!-- /uncrd -->
+	<!-- uncrd if: type == "link" && !isFriend() -->
+		<a href="#" data-uncrd="css:css,click:core.open.bind($data,addParams),text:addText"></a>
+	<!-- /uncrd -->
+	<!-- uncrd if: type == "button" && isFriend() -->
+		<button data-uncrd="css:css,click:core.open.bind($data,remParams),text:remText"></button>
+	<!-- /uncrd -->
+	<!-- uncrd if: type == "button" && !isFriend() -->
+		<button data-uncrd="css:css,click:core.open.bind($data,addParams),text:addText"></button>
+	<!-- /uncrd -->
+<!-- /uncrd -->

@@ -24,7 +24,7 @@
 					<!-- /uncrd -->
 					<!-- uncrd ifnot: my -->
 						<li><a href="#" data-uncrd="click:core.open.bind($data,{name:'messageForm',to_id:user().id,data:user(),loading:'after-inside',windowName:'messages'})">Отправить сообщение</a></li>
-						<li><a href="#" data-uncrd="click:core.open.bind($data,{name:'friendForm',to_id:user().id,data:user(),windowName:'friendForm',loading:'after-inside'}),text:isFriend()?'Удалить из друзей':'Добавить в друзья'"></a></li>
+						<li data-uncrd="widget:{name:'manageFriendControl',to_id:user().id,data:user(),loading:'after-inside'}"></li>
 					<!-- /uncrd -->
 				</ul>
 				<div class="uncrd-header-with-bg uncrd-header-with-bg-small"><a href="#" data-uncrd="click:core.open.bind($data,{name:'userlist',to_id:to_id,loading:'after-inside',windowName:'userlist'})"><strong>Друзья</strong></a></div>

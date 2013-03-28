@@ -6,18 +6,11 @@ define(["jquery","knockout"], function($,ko) {
 		this.data = this.asObservable(d.data,{});
 		this.to_id = this.asObservable(d.to_id,0);
 		this.loading = ko.observable(false);
-		this.modalWindow = o.options.modalWindow;
+		this.modalWindow = d.modalWindow;
 
-		// Зачем isFriend: если юзер не зарегин, нажимает добавить друга, вводит логин-пароль и оказывается, что он уже в друзьях, идет запрос на удаление друга а не на добавление
-		// поэтому нужно isFriend фиксировать вначале
-		this.isFriend = false;
-		if (this.data() && this.core.user()) {
-			for (var i = 0; i < this.core.user().friends.length; i++)
-				if (this.data().id == this.core.user().friends[i]) {
-					this.isFriend = true;
-					break;
-				}
-		}
+		this.action = ko.utils.unwrapObservable(d.action) || "";
+		if (this.action.length == 0)
+			this.action = this.core.isFriend(this.core.user(),this.to_id()) ? "remove" : "add";
 
 		this.loadData = function() {
 			self.loading(true);
@@ -65,7 +58,7 @@ define(["jquery","knockout"], function($,ko) {
 			sendAjax: function() {
 				self.form.ajax = self.core.apiCall({
 					data: {
-						action: self.isFriend ? "destroyFriend" : "createFriend",
+						action: self.action == "remove" ? "destroyFriend" : "createFriend",
 						formData: {
 							text: self.form.text(),
 							to_id: self.to_id()

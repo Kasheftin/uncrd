@@ -56,12 +56,6 @@ define(["jquery","knockout"], function($,ko) {
 					}(rw),
 					my: ko.computed(function() {
 						return self.core.user() && self.core.user().id == rw.id;
-					}),
-					isFriend: ko.computed(function() {
-						if (!self.core.user()) return false;
-						for (var i = 0; i < self.core.user().friends.length; i++)
-							if (self.core.user().friends[i] == rw.id) return true;
-						return false;
 					})
 				});
 			}

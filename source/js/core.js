@@ -86,6 +86,15 @@ define(["config","jquery","knockout","auth","eventsEmitter","windowManager","rou
 			},request));
 		}
 
+		// TODO: move to user actions
+		this.isFriend = function(user,to_id) {
+			if (user && user.friends.length > 0 && to_id > 0)
+				for (var i = 0; i < user.friends.length; i++)
+					if (to_id == user.friends[i])
+						return true;
+			return false;
+		}
+
 	}
 
 	$.extend(Core.prototype,EventsEmitter.prototype);

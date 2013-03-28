@@ -25,24 +25,6 @@ define(["jquery","knockout"], function($,ko) {
 			return (self.user() && self.core.user() && self.core.user().id == self.user().id);
 		});
 
-		this.isFriend = ko.computed(function() {
-// Йобаная хрень не пашет, $.inArray(10558,[10558,123,123,123]) == -1
-//			if (rw && self.core.user() && $.inArray(rw.id,self.core.user().friends || []) > -1)
-//				self.isFriend(true);
-//			else
-//				self.isFriend(false);
-			var rw = self.user();
-			var isFriend = false;
-			if (rw && self.core.user()) {
-				for (var i = 0; i < self.core.user().friends.length; i++)
-					if (rw.id == self.core.user().friends[i]) {
-						isFriend = true;
-						break;
-					}
-			}
-			return isFriend;
-		});
-
 		this.profileSubmenuVisible = ko.observable(false);
 		this.switchProfileSubmenu = function(obj,e) {
 			$(e.currentTarget).blur();
