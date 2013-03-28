@@ -29,13 +29,6 @@ define(["jquery","knockout","eventsEmitter"],function($,ko,EventsEmitter) {
 						lastReadyWidget = ar[i];
 						if (ar[i].data && ar[i].data.windowNode && ar[i].data.windowNode.hasClass("uncrd-unvisible"))
 							ar[i].data.windowNode.removeClass("uncrd-unvisible");
-/*
-							setTimeout(function(node) {
-								return function() {
-									node.removeClass("uncrd-unvisible");
-								}
-							}(ar[i].data.windowNode),200);
-*/
 					}
 				}
 			}
@@ -82,9 +75,9 @@ define(["jquery","knockout","eventsEmitter"],function($,ko,EventsEmitter) {
 						left: obj.data("orig-left")
 					});
 				});	
+				self.core.router.clear();
 				$("html").scrollTop(self.contentScrollTop);
 				self.contentScrollTop = null;
-				self.core.router.clear();
 			}
 		});
 
