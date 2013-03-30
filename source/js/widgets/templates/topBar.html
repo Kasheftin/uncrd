@@ -4,18 +4,18 @@
 			<a class="brand" href="#">UnCRD</a>
 			<!-- uncrd if: core.user -->
 				<ul class="nav">
-<li><a href="#" data-uncrd="click:core.open.bind($data,{name:'profile',loading:'after-inside'})">Профиль</a></li>
-<li><a href="#" data-uncrd="click:core.open.bind($data,{name:'userlist',loading:'after-inside',windowName:'userlist'})">Друзья</a></li>
-<li><a href="#" data-uncrd="click:core.open.bind($data,{name:'messages',loading:'after-inside',windowName:'messages'})">Сообщения</a></li>
-<li><a href="#" data-uncrd="click:core.open.bind($data,{name:'news',loading:'after-inside'})">Новости</a></li>
-<li><a href="#" data-uncrd="click:core.open.bind($data,{name:'fav',loading:'after-inside'})">Избранное</a></li>
+<li><a href="#" data-uncrd="click:o({name:'profile',loading:'after-inside'})">Профиль</a></li>
+<li><a href="#" data-uncrd="click:o({name:'userlist',loading:'after-inside',windowName:'userlist'})">Друзья</a></li>
+<li><a href="#" data-uncrd="click:o({name:'messages',loading:'after-inside',windowName:'messages'})">Сообщения</a></li>
+<li><a href="#" data-uncrd="click:o({name:'news',loading:'after-inside'})">Новости</a></li>
+<li><a href="#" data-uncrd="click:o({name:'fav',loading:'after-inside'})">Избранное</a></li>
 <li><a href="#" data-uncrd="click:core.auth.signout">Выход</a></li>
 				</ul>
 			<!-- /uncrd -->
 			<!-- uncrd ifnot: core.user -->
 				<ul class="nav">
-<li><a href="#" data-uncrd="click:core.open.bind($data,'about')">О системе</a></li>
-<li><a href="#" data-uncrd="click:core.open.bind($data,'registerForm')">Регистрация</a></li>
+<li><a href="#" data-uncrd="click:o('about')">О системе</a></li>
+<li><a href="#" data-uncrd="click:o('registerForm')">Регистрация</a></li>
 				</ul>
 				<div class="loginForm" data-uncrd="widget:{name:'loginForm',template:'loginFormInline'}"></div>
 			<!-- /uncrd -->

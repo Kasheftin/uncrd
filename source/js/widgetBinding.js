@@ -23,11 +23,10 @@ define(["jquery","knockout","eventsEmitter","widget","text"],function($,ko,Event
 					$.extend(Model.prototype,Widget.prototype);
 					// core проставляем у прототипа потому что на него часто ссылаемся в конструкторе
 					Model.prototype.core = core;
-					Model.prototype.open = core.open;
 				}
 
 				// инициализация объекта виджета, засовываем туда параметров по максимуму
-				var w = typeof Model == "function" ? new Model({
+				var o = {
 					element: element,
 					options: val,
 					valueAccessor: valueAccessor,
@@ -35,13 +34,18 @@ define(["jquery","knockout","eventsEmitter","widget","text"],function($,ko,Event
 					viewModel: viewModel,
 					bindingContext: bindingContext,
 					html: html
-				}) : Model;
+				}
+
+				var w = typeof Model == "function" ? new Model(o) : Model;
 
 				// ссылки ставим в конкретном объекте а не в прототипе!!!
-				// эти две переменных ставим здесь, они нужны, когда удаляем виджет
+				// внутренние переменные, которые нужны при удалении виджета и которые могут использоваться в callback
 				// в случае удаления виджета смотрим его парент, а это viewModel, и сносим оттуда ссылку + удаляем domNode с его элементом element
-				w.viewModel = viewModel;
-				w.element = element;
+				w._viewModel = viewModel;
+				w._element = element;
+				w._data = val;
+				w._o = o;
+
 
 				// регистрируем виджет в childrenWidgets у парента, чтобы из парента к нему был доступ
 				if (!viewModel.childrenWidgets)
@@ -57,6 +61,7 @@ define(["jquery","knockout","eventsEmitter","widget","text"],function($,ko,Event
 				while (firstDomChild && firstDomChild.nodeType != 1)
 					firstDomChild = ko.virtualElements.nextSibling(firstDomChild);
 
+				w.isReady = true;
 				if (w.requiresLoading) {
 					w.isReady = false;
 					w.on("ready",function() {
@@ -79,7 +84,6 @@ define(["jquery","knockout","eventsEmitter","widget","text"],function($,ko,Event
 	ko.virtualElements.allowedBindings.widget = true;
 
 	ko.createWidget = function(node,widgetOptions,viewModel) {
-		console.log("createWidget with options",widgetOptions);
 		var r = ko.applyBindingsToNode(node,{widget: widgetOptions},viewModel);
 	}
 

@@ -1,9 +1,13 @@
 define(["jquery","knockout"],function($,ko) {
 	var LoginRegister = function(o) {
 		var self = this;
+		var d = o.options;
+
+console.log("LoginRegister",d);
+
 		this.auth = this.core.auth;
-		this.modalWindow = o.options.modalWindow;
-		this.authCallback = o.options.authCallback;
+		this.modalWindow = d.modalWindow;
+		this.authCallback = d.authCallback;
 
 		this.modalWindow.on("destroy",function() {
 			if (self.userSubscribe)

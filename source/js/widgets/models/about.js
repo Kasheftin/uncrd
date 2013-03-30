@@ -1,7 +1,10 @@
 define(["knockout"],function(ko) {
 	var AboutPage = function(o) {
+		var self = this;
+
 		this.modalWindow = o.options.modalWindow;
 		this.modalWindow.header("О проекте");
+		this.modalWindow.cssPosition("absolute");
 
 		this.requiresLoading = true;
 
@@ -12,7 +15,7 @@ define(["knockout"],function(ko) {
 		this.sampleContent = ko.observable("");
 		this.addContent = function() {
 			var str = "Sample content.<br>";
-			for (var i = 0; i < 5; i++)
+			for (var i = 0; i < 20; i++)
 				this.sampleContent(this.sampleContent() + str);
 			this.modalWindow.recalculatePosition(true);
 		}
@@ -21,9 +24,10 @@ define(["knockout"],function(ko) {
 			this.modalWindow.recalculatePosition(true);
 		}
 		this.switchToRegister = function() {
-			this.core.windowManager.open("register");
+			self.core.open({name:"register"});
+//			this.core.windowManager.open("register");
 //			this.modalWindow.destroy();
-			this.modalWindow.destroy();
+//			this.modalWindow.destroy();
 		}
 		var self = this;
 		this.domInit = function() {

@@ -24,6 +24,7 @@ define(["config","jquery","knockout","auth","eventsEmitter","windowManager","rou
 		// данные про авторизацию - биндинги формы логина, выход и авторизация по SID из cookie
 		this.auth = new Auth(self);
 
+		// TODO: Переделать через setImmediate
 		this.windowManager.on("ready",function() {
 			self.windowManager.isReady = true;
 			if (self.windowManager.isReady && self.router.isReady && self.auth.isReady)
@@ -48,6 +49,12 @@ define(["config","jquery","knockout","auth","eventsEmitter","windowManager","rou
 			self.windowManager.initialize();
 		}
 
+		// Сокращение open-метода, который отдает open.bind
+		this.o = function(data) {
+			return self.open.bind(self,data);
+		}
+
+		// Контекст в open-методе намерено теряется
 		this.open = function(data,context,e) {
 			if (typeof data != "object") data = {name:data};
 			self.windowManager.open.call(self.windowManager,$.extend({event:e},data));

@@ -19,7 +19,7 @@ define(["jquery","knockout","eventsEmitter"],function($,ko,EventsEmitter) {
 		this.childrenWidgets.subscribe(function(ar) {
 			// Каждое окно, которое создается windowManager-ом, должно вернуть статус ready, т.е. должно загрузиться.
 			// До статуса ready дом создается и заполняется, но display:none.
-			// Ищем, есть ли хоть одно готовое окно и заодно убираем hide класс.
+			// Ищем, есть ли хоть одно готовое окно и убираем hide класс ему.
 			var readyWidgetExist = false;
 			var lastReadyWidget = null;
 			if (ar && ar.length > 0) {
@@ -27,24 +27,19 @@ define(["jquery","knockout","eventsEmitter"],function($,ko,EventsEmitter) {
 					if (ar[i].isReady) {
 						readyWidgetExist = true;
 						lastReadyWidget = ar[i];
-						if (ar[i].data && ar[i].data.windowNode && ar[i].data.windowNode.hasClass("uncrd-unvisible"))
-							ar[i].data.windowNode.removeClass("uncrd-unvisible");
+						if (ar[i]._data && ar[i]._data.windowNode && ar[i]._data.windowNode.hasClass("uncrd-unvisible"))
+							ar[i]._data.windowNode.removeClass("uncrd-unvisible");
 					}
 				}
 			}
-
 			if (readyWidgetExist) {
 				// Если готовое окно есть, то показываем его. При этом нужно прибить body чтобы был правильный скролл и показать fade
 				self.currentWindow(lastReadyWidget);
-
 				if (self.fadeInShown) return;
 				self.fadeInShown = true;
-
 				self.fadeIn.removeClass("hide");
 				self.contentScrollTop = $("html").scrollTop();
-
 				$("body").data("uncrd-orig-overflow-y",$("body").css("overflow-y")).css("overflow-y","scroll");
-
 				$("body").css("overflow-y","scroll");
 				self.siteContainer.each(function() {
 					var obj = $(this);
@@ -118,43 +113,66 @@ define(["jquery","knockout","eventsEmitter"],function($,ko,EventsEmitter) {
 	// Все окна в WindowManager открываются через метод open, поэтому будем считать текущим последнее открытое или драгнутое окно
 	// Принимаем в data строку или массив (обычный) или observable-строку (но не observable-массив, не паримся с ним)
 	// Всю эту data нужно "прокинуть" через виджет modalWindow в непосредственно его контент, т.е. внутренний виджет
-	WindowManager.prototype.open = function(data) {
+	WindowManager.prototype.open = function(inputData) {
 		var self = this;
 
-		if (ko.isObservable(data) || ko.isComputed(data) || typeof data == "string")
-			data = {name:data};
+		if (ko.isObservable(inputData) || ko.isComputed(inputData) || typeof inputData == "string")
+			inputData = {name:inputData};
 
-		data.windowNode = $("<div />",{"class":"uncrd-window uncrd-unvisible"}).appendTo(this.container);
-		data.windowName = data.windowName || "default";
+		// в inputData пришли данные для внутреннего виджета + необязательные данные для modalWindow в переменной inputData.modalWindow
+		// но сначала открываем modalWindow, и уже изнутри modalWindow открывается внутренний виджет, поэтому нужно их поменять местами
+		// сейчас готовим data - параметры для modalWindow, которые внутри в параметре widgetData должны содержать исходные данные		
+		var data = $.extend({
+			name: "modalWindow3",
+			widgetData: inputData,
+			windowNode: $("<div />",{"class":"uncrd-window uncrd-unvisible"}).appendTo(this.container),
+			windowName: inputData.windowName || "default",
+			callback: function(w) {
+				w.on("dragStart",function() {
+					$(w._element).appendTo(self.container);
+					if (self.childrenWidgets.indexOf(w) != self.childrenWidgets().length - 1) {
+						self.childrenWidgets.splice(self.childrenWidgets.indexOf(w),1);
+						self.childrenWidgets.push(w);
+					}
+				});
+				// Если иконки загрузки не было, нужно открывать окно, т.е. вручную переставляем isReady=true и окно показывается. 
+				// В этом случае окно уже внутри себя должно думать, какой loading показывать.
+				if (!w._data.loadingIsShown)
+					w.isReady = true;
+				// Открываемое окно modalWindow3 либо уже должно быть готово, либо должно эмитить готово когда будет готово
+				if (!w.requiresLoading || w.isReady)
+					self.windowReadyCallback(w);
+				else
+					w.on("ready",function() {
+						self.windowReadyCallback(w);
+					});
+			}
+		},inputData.modalWindow || {});
 
 		// Первый блин. Здесь втыкаем иконку загрузки к ссылке или объекту, который вызвал open
-		if (data.event && data.event.currentTarget && data.loading) {
-			var elem = $(data.event.currentTarget);
-			data.loadingIcon = $("<div />",{"class":"uncrd-loading-absolute"}).insertAfter(elem);
-			var p = elem.position();
-			var w = Math.floor(elem.outerWidth()/2);
-			var h = Math.floor(elem.outerHeight()/2);
-			var w2 = Math.floor(data.loadingIcon.width()/2);
-			var h2 = Math.floor(data.loadingIcon.height()/2);
-			if (data.loading == "over") {
-				data.loadingIcon.css({top:(p.top+h-h2).toString()+"px",left:(p.left+w-w2).toString()+"px"});
+		if (inputData.event && inputData.event.currentTarget) {
+			var elem = $(inputData.event.currentTarget);
+			var loadings = ["over","after","before","after-inside"];
+			var loading = inputData.loading;
+			$.each(loadings,function(i,v) { 
+				if (!loading && elem.hasClass("uncrd-loading-" + v)) loading = v;
+			});
+			if (loading) {
+				data.loadingIcon = $("<div />",{"class":"uncrd-loading-absolute"}).insertAfter(elem);
 				data.loadingIsShown = true;
-			}
-			else if (data.loading == "after") {
-				data.loadingIcon.css({top:(p.top+h-h2).toString()+"px",left:(p.left+2*w).toString()+"px"});
-				data.loadingIsShown = true;
-			}
-			else if (data.loading == "after-inside") {
-				data.loadingIcon.css({top:(p.top+h-h2).toString()+"px",left:(p.left+2*w-2*w2).toString()+"px"});
-				data.loadingIsShown = true;
-			}
-			else if (data.loading == "before") {
-				data.loadingIcon.css({top:(p.top+h-h2).toString()+"px",left:(p.left-2*w2).toString()+"px"});
-				data.loadingIsShown = true;
-			}
-			else {
-				data.loadingIcon.remove();
-				delete data.loadingIcon;
+				var p = elem.position();
+				var w = Math.floor(elem.outerWidth()/2);
+				var h = Math.floor(elem.outerHeight()/2);
+				var w2 = Math.floor(data.loadingIcon.width()/2);
+				var h2 = Math.floor(data.loadingIcon.height()/2);
+				if (loading == "after")
+					data.loadingIcon.css({top:(p.top+h-h2).toString()+"px",left:(p.left+2*w).toString()+"px"});
+				else if (loading == "after-inside")
+					data.loadingIcon.css({top:(p.top+h-h2).toString()+"px",left:(p.left+2*w-2*w2).toString()+"px"});
+				else if (loading == "before")
+					data.loadingIcon.css({top:(p.top+h-h2).toString()+"px",left:(p.left-2*w2).toString()+"px"});
+				else
+					data.loadingIcon.css({top:(p.top+h-h2).toString()+"px",left:(p.left+w-w2).toString()+"px"});
 			}
 		}
 
@@ -164,44 +182,19 @@ define(["jquery","knockout","eventsEmitter"],function($,ko,EventsEmitter) {
 		// в этом случае сразу показываем модальное окно, и уже внутри него крутится загрузка.
 		// data.loadingIsShown - флаг, который говорит, показана ли иконка.
 
-		ko.createWidget(data.windowNode.get(0),$.extend(true,{},data,{
-			name: "modalWindow3",
-			data: data,
-			callback: function(w) {
-				w.on("dragStart",function() {
-					$(w.element).appendTo(self.container);
-					if (self.childrenWidgets.indexOf(w) != self.childrenWidgets().length - 1) {
-						self.childrenWidgets.splice(self.childrenWidgets.indexOf(w),1);
-						self.childrenWidgets.push(w);
-					}
-				});
-
-				// Если иконки загрузки не было, нужно открывать окно, т.е. вручную переставляем isReady=true и окно показывается. 
-				// В этом случае окно уже внутри себя должно думать, какой loading показывать.
-				if (!w.data.loadingIsShown)
-					w.isReady = true;
-
-				// Открываемое окно modalWindow3 либо уже должно быть готово, либо должно эмитить готово когда будет готово
-				if (!w.requiresLoading || w.isReady)
-					self.windowReadyCallback(w);
-				else
-					w.on("ready",function() {
-						self.windowReadyCallback(w);
-					});
-			}
-		}),this);
+		ko.createWidget(data.windowNode.get(0),data,this);
 	}
 
 	// Вызывается когда новое окно открываемое окно эмитит ready или уже сразу isReady
 	WindowManager.prototype.windowReadyCallback = function(w) {
 		var self = this;
 		setTimeout(function() {
-			if (w.data.loadingIsShown && w.data.loadingIcon)
-				w.data.loadingIcon.remove();
+			if (w._data.loadingIsShown && w._data.loadingIcon)
+				w._data.loadingIcon.remove();
 			self.childrenWidgets.valueHasMutated();
 			self.closeOtherByName(w);
-			if (w.data.callback)
-				w.data.callback();
+//			if (w._data.callback)
+//				w._data.callback(w);
 		},200);
 	}
 
@@ -209,7 +202,7 @@ define(["jquery","knockout","eventsEmitter"],function($,ko,EventsEmitter) {
 	WindowManager.prototype.closeOtherByName = function(w) {
 		var w2d = [];
 		$.each(this.childrenWidgets(),function(i,v) {
-			if ((v.data.windowName == w.data.windowName) && (v != w))
+			if ((v._data.windowName == w._data.windowName) && (v != w))
 				w2d.push(v);
 		});
 		$.each(w2d,function(i,v) {

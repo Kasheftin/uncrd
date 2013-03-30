@@ -46,7 +46,7 @@ define(["jquery","knockout"], function($,ko) {
 				else {
 					self.open({
 						name: "loginRegister",
-						windowName: "loginRegister",
+						windowName: "auth",
 						authCallback: function() {
 							self.form.sendAjax();
 						}

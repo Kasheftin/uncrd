@@ -1,86 +1,36 @@
 define(["jquery","knockout"],function($,ko) {
 	var ModalWindow = function(o) {
 		var self = this;
+		var d = o.options;
 
-console.log("Init ModalWindow, o=",o);
+		this.header = this.asObservable(d.header,"");
+		this.headerWidget = this.asObservable(d.headerWidget,null);
+		this.footerWidget = this.asObservable(d.footerWidget,null);
+		this.content = this.asObservable(d.content,null);
+		this.width = this.asObservable(d.width,560);
+		this.cssPosition = this.asObservable(d.cssPosition,"fixed");
+		this.leftBackdropAction = this.asObservable(d.leftBackdropAction,null);
 
-/*
-	Когда делаем windowManager.open(data), все параметры data попадают в виджет modalWindow в o.options
-	При этом есть 3 особенных параметра - name, data, callback - они НЕ из data. Они переписаны в windowManager.
-	Пример:
-		Открываем окно 
-			this.core.open({
-				name:'alert',
-				header: 'Alert Header',
-				callback:function() { 
-					alert('OK'); 
-				},
-				message: 'Some Alert',
-				cssPosition: 'absolute'
-			});
+		this.xPosition = ko.utils.unwrapObservable(d.xPosition) || "center";
+		this.yPosition = ko.utils.unwrapObservable(d.yPosition) || "center";
+		this.xOffset = ko.utils.unwrapObservable(d.xOffset) || 0;
+		this.yOffset = ko.utils.unwrapObservable(d.yOffset) || 0;
 
-		Тогда в o.options имеем все эти параметры кроме name, data, callback, которые переписаны на другие в windowManager:
-			o.options = {
-				name: 'modalWindow3',
-				header: 'Alert Header',
-				callback: ... (callback из windowManager-а)
-				message: 'Some Alert',
-				cssPosition: 'absolute',
-				data: {
-					name:'alert',
-					header: 'Alert Header',
-					callback:function() { 
-						alert('OK'); 
-					},
-					message: 'Some Alert',
-					cssPosition: 'absolute'
-				}
-			}
-*/
-
-		this.header = this.asObservable(o.options.header,"");
-		this.headerWidget = this.asObservable(o.options.headerWidget,null);
-		this.footerWidget = this.asObservable(o.options.footerWidget,null);
-		this.content = this.asObservable(o.options.content,null);
-		this.width = this.asObservable(o.options.width,560);
-		this.cssPosition = this.asObservable(o.options.cssPosition,"fixed");
-
-		this.xPosition = ko.utils.unwrapObservable(o.options.xPosition) || "center";
-		this.yPosition = ko.utils.unwrapObservable(o.options.yPosition) || "center";
-		this.xOffset = ko.utils.unwrapObservable(o.options.xOffset) || 0;
-		this.yOffset = ko.utils.unwrapObservable(o.options.yOffset) || 0;
-
-		this.requiresLoading = true;
-		this.isReady = false;
-
-		// Магическая строчка блин
-		// Зачем нужна: windowManager при инициализации modalWindow положил в эту data кучу всего своего, что захочет использовать когда окно ининциализируется и загрузится 
-		// - loadingIsShown, loadingIcon, windowName
-		// но в callback-методах после загрузки есть доступ только к этому виджету, т.е. к self
-		this.data = o.options.data;
-
-		// Либо указан content, либо data и в data есть name - имя загружаемого виджета
-		// Так вот, если data нет или data.name нет, то загрузка не требуется
-		if (!o.options.data || !o.options.data.hasOwnProperty("name")) {
-			this.requiresLoading = false;
-			this.isReady = true;
-		}
-
-		this.buttons = ko.observableArray([]);
-		this.buttons.push({
-			action: function() { self.destroy() },
-			css: "",
-			text: "Закрыть"
-		});
-
-		this.leftBackdropAction = ko.observable(null);
-
+		// Либо указан content, либо widgetData и в widgetData есть name - имя загружаемого виджета
+		// Так вот, если widgetData нет или widgetData.name нет, то загрузка не требуется
 		// если указана page, то в контент window грузится виджет, ниже - его опции
 		// в опции можно сообщить callback, после загрузки он выполняется
 		// нам главное после загрузки пересчитать размер и положение окна + сделать emit(ready) после ready внутреннего виджета
 		// Здесь мы опять переопределяем родной callback, тот, что указывался еще в this.core.open({callback:...}), поэтому нужно о нем вспомнить в widgetReadyCallback
+
+		if (d.widgetData && d.widgetData.hasOwnProperty("name")) {
+			this.requiresLoading = true;
+			this.isReady = false;
+		}
+
 		this.pageWidgetBinding = ko.computed(function() {
-			return $.extend({},o.options.data,{
+			if (!d.widgetData || !d.widgetData.hasOwnProperty("name")) return false;
+			return $.extend({},o.options.widgetData,{
 				modalWindow: self,
 				callback: function(w) {
 					if (!w.requiresLoading || w.isReady)
@@ -94,12 +44,19 @@ console.log("Init ModalWindow, o=",o);
 			});
 		});
 
+		this.buttons = ko.observableArray([]);
+		this.buttons.push({
+			action: function() { self.destroy() },
+			css: "",
+			text: "Закрыть"
+		});
+
 		this.widgetReadyCallback = function(w) {
 			self.isReady = true;
 			self.recalculatePositionTrue();
 			// вспоминаем про родной callback
-			if ($.isFunction(o.options.data.callback))
-				o.options.data.callback(w);
+			if ($.isFunction(d.widgetData.callback))
+				d.widgetData.callback(w);
 			self.emit("ready");
 		}
 

@@ -4,11 +4,13 @@
 			<h3 data-uncrd="widget:headerWidget,visible:headerWidget"></h3>
 			<h3 data-uncrd="html:header,visible:!headerWidget()"></h3>
 	</div>
-	<!-- uncrd if: content -->
-		<div class="modal-body" data-uncrd="html:content"></div>
-	<!-- /uncrd -->
-	<!-- uncrd ifnot: content -->
+	<!-- uncrd if: pageWidgetBinding -->
 		<div class="modal-body" data-uncrd="widget:pageWidgetBinding"></div>
+	<!-- /uncrd -->
+	<!-- uncrd ifnot: pageWidgetBinding -->
+		<!-- uncrd if: content -->
+			<div class="modal-body" data-uncrd="html:content"></div>
+		<!-- /uncrd -->
 	<!-- /uncrd -->
 	<div class="modal-footer">
 		<!-- uncrd if: footerWidget -->

@@ -2,9 +2,8 @@ define(["jquery","knockout","eventsEmitter"],function($,ko,EventsEmitter) {
 	var Auth = function(core) {
 		var self = this;
 
-		// Вставим сюда валидацию данных юзера
+		// Вставим сюда валидацию данных юзера и вывод окон
 		core.user.subscribe(function(rw) {
-			console.log("auth user subscribe",rw);
 			if (rw && rw.id > 0) {
 				if ((parseInt(rw.city_id) == 0 || parseInt(rw.country_id) == 0 || parseInt(rw.photo_exist) == 0) && !$.cookie("disableNotifications"))
 					core.open({name:"userDataNotifications",windowName:"alert"});
