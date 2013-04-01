@@ -1,0 +1,1 @@
+uncrd.define([],function(){var e=function(e){var t=e.options.modalWindow;t?(t.width(700),t.cssPosition("absolute"),this.close=function(){t.destroy()}):this.close=function(){this.destroy()}};return e});

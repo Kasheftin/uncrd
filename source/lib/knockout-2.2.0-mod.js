@@ -7,11 +7,6 @@ var DEBUG=true;
 (function(window,document,navigator,jQuery,undefined){
 !function(factory) {
     // Support three module loading scenarios
-	// define(test);
-	// define.amd;
-	// define;
-	// define['amd'];
-	// typeof define === 'function'
     if (typeof require === 'function' && typeof exports === 'object' && typeof module === 'object') {
         // [1] CommonJS/Node.js
         var target = module['exports'] || exports; // module.exports is for Node.js
@@ -1903,7 +1898,7 @@ ko.exportSymbol('virtualElements.setDomNodeChildren', ko.virtualElements.setDomN
 
     ko.utils.extend(ko.bindingProvider.prototype, {
         'nodeHasBindings': function(node) {
-             switch (node.nodeType) {
+            switch (node.nodeType) {
                 case 1: return node.getAttribute(defaultBindingAttributeName) != null;   // Element
                 case 8: return ko.virtualElements.virtualNodeBindingValue(node) != null; // Comment node
                 default: return false;

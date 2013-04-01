@@ -1,51 +1,30 @@
-define(["config","jquery","knockout","auth","eventsEmitter","windowManager","router"],function(config,$,ko,Auth,EventsEmitter,WindowManager,Router) {
+define(["jquery","knockout","eventsEmitter","windowManager"],function($,ko,EventsEmitter,WindowManager) {
 	var Core = function() {
 		var self = this;
 
 		// ссылка на само себя для widgetBinging-а
 		this.core = this;
 
-		// копируем config в Core, потому что к Core будет доступ из любого виджета
-		this.config = config;
+		this.config = {
+			publicBaseUrl: ""
+		}
 
-		// инфа о текущем пользователе и SID
-		this.user = ko.observable(null);
-
-		// здесь храним данные, которые не меняются, из общих мелких таблиц. Если какой-нибудь ajax возвращает в результате common, складываем это в this.common
-		// например, countries, cities из геобазы
-		this.common = {countryGroups:{},countries:{},cities:{}};
+		this.router = {
+			clear: function() { }
+		}
 
 		// менеджер открытых окон
 		this.windowManager = new WindowManager(this);
 
-		// роутер - штука, которая будет отслеживать изменения хеша и по ним открывть соответствующие окна
-		this.router = new Router(this);
-
-		// данные про авторизацию - биндинги формы логина, выход и авторизация по SID из cookie
-		this.auth = new Auth(self);
-
-		// TODO: Переделать через setImmediate
 		this.windowManager.on("ready",function() {
 			self.windowManager.isReady = true;
-			if (self.windowManager.isReady && self.router.isReady && self.auth.isReady)
-				self.emit("ready");
-		});
-		this.router.on("ready",function() {
-			self.router.isReady = true;
-			if (self.windowManager.isReady && self.router.isReady && self.auth.isReady)
-				self.emit("ready");
-		})
-		this.auth.on("ready",function() {
-			self.auth.isReady = true;
-			if (self.windowManager.isReady && self.router.isReady && self.auth.isReady)
+			if (self.windowManager.isReady)
 				self.emit("ready");
 		});
 
-		// ядро запускает инициализацию core, эта инициализация запускает инициализации компонентов, 
+		// main.js запускает инициализацию core, эта инициализация запускает инициализации компонентов, 
 		// например auth, который при непустом SID в cookie должен сделать запрос и получить авторизацию
 		this.initialize = function() {
-			self.auth.initialize();
-			self.router.initialize();
 			self.windowManager.initialize();
 		}
 
@@ -60,48 +39,6 @@ define(["config","jquery","knockout","auth","eventsEmitter","windowManager","rou
 			self.windowManager.open.call(self.windowManager,$.extend({event:e},data));
 			return false;
 		}
-
-		this.updateCommon = function(data) {
-			if (!data) return;
-			$.each(data.countries || [],function(i,rw) {
-				self.common.countries[i] = rw;
-			});
-			$.each(data.cities || [],function(i,rw) {
-				self.common.cities[i] = rw;
-			});
-		}
-
-		this.error = function(message,parentWindow) {
-			self.open({name:"alert",windowName:"alert",type:"error",message:message,callback: function() {
-				if (parentWindow)
-					parentWindow.destroy();
-			}});
-		}
-
-		this.apiCall = function(request) {
-			return $.ajax($.extend(true,{},{
-				url: config.apiBaseUrl,
-				type: "post",
-				dataType: "json",
-				data: {
-					SID: (this.user() ? this.user().SID : ""),
-					debug: true
-				},
-				error: function(jqXHR,textStatus,errorThrown) {
-					self.error(textStatus);
-				}
-			},request));
-		}
-
-		// TODO: move to user actions
-		this.isFriend = function(user,to_id) {
-			if (user && user.friends.length > 0 && to_id > 0)
-				for (var i = 0; i < user.friends.length; i++)
-					if (to_id == user.friends[i])
-						return true;
-			return false;
-		}
-
 	}
 
 	$.extend(Core.prototype,EventsEmitter.prototype);

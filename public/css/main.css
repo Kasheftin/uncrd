@@ -1,0 +1,324 @@
+
+.uncrd-topbar form {
+	margin-bottom: 0;
+}
+.uncrd-topbar .loginForm {
+	float: right;
+	margin-top: 5px;
+}
+.uncrd-topbar .btn { 
+	margin: 0;
+}
+.uncrd-container-fixed {
+	position: fixed;
+}
+.uncrd-modal-fix {
+	margin: 0;
+	top: 0;
+	left: 0;
+}
+.uncrd-modal-fix .modal-header {
+	border: 0;
+	cursor: move;
+}
+.uncrd-modal-fix .modal-body {
+	max-height: none;
+}
+.uncrd-modal-fix .modal-header .close {
+	position: absolute;
+	right: 10px;
+	top: 0;
+}
+.uncrd-modal-fix.modal {
+	position: absolute;
+}
+.uncrd-modal-backdrop-left {
+	background-color: transparent;
+	right: 50%;
+	cursor: pointer;
+}
+.uncrd-modal-backdrop-arrow-left {
+	width: 0;
+	height: 0;
+	border-right: 20px solid #606060;
+	border-top: 20px solid transparent;
+	border-bottom: 20px solid transparent;
+	margin: 20px;
+}
+.uncrd-modal-backdrop-left:hover .uncrd-modal-backdrop-arrow-left {
+	border-right: 20px solid #ffffff;
+}
+.uncrd-unvisible {
+	visibility: hidden;
+}
+.uncrd-loading-icon {
+	width: 32px;
+	height: 32px;
+	background: transparent url("loading.gif") 0 0 no-repeat;
+}
+.uncrd-loading-icon-small {
+	width: 16px;
+	height: 16px;
+	background: transparent url("loading_16x16.gif") 0 0 no-repeat;
+}
+.uncrd-loading-absolute {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 16px;
+	height: 16px;
+	background: transparent url("loading_16x16.gif") 0 0 no-repeat;
+}
+.uncrd-loading-icon-big {
+	width: 64px;
+	height: 64px;
+	background: transparent url("loading_64x64.gif") 0 0 no-repeat;
+}
+.uncrd-loading-with-icon {
+	height: 27px;
+	padding-top: 5px;
+	padding-left: 35px;
+	background: transparent url("loading.gif") 0 0 no-repeat;
+	display: table;
+	margin: 0 auto;
+}
+.uncrd-loading-i-icon {
+	background: transparent url("loading_16x16.gif") 0 0 no-repeat;
+	display: inline-block;
+	height: 16px;
+	line-height: 16px;
+	margin-top: 1px;
+	vertical-align: text-top;
+	width: 16px;
+}
+.uncrd-photo-container,.uncrd-photo-container > a {
+	width: 800px;
+	height: 600px;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+.uncrd-avatar-small > img,.uncrd-avatar-small .uncrd-avatar-nophoto {
+	width: 60px;
+	height: 60px;
+}
+.uncrd-avatar-small .uncrd-avatar-nophoto-1 {
+	background-image: url("no-avatar-male60.png");
+}
+.uncrd-avatar-small .uncrd-avatar-nophoto-2 {
+	background-image: url("no-avatar-female60.png");
+}
+.uncrd-avatar-middle .uncrd-avatar-nophoto-1 {
+	width: 170px;
+	height: 170px;
+	background-image: url("no-avatar-male.png");
+}
+.uncrd-avatar-middle .uncrd-avatar-nophoto-2 {
+	width: 170px;
+	height: 170px;
+	background-image: url("no-avatar-female.png");
+}
+.uncrd-thumb-fix {
+	width: 140px;
+	height: 105px;
+}
+.uncrd-dl-fix dd {
+	overflow-x: hidden;
+}
+.uncrd-select-day {
+	width: 55px;
+}
+.uncrd-select-month {
+	width: 100px;
+}
+.span1_5 {
+	width: 106px;
+}
+.span1_25 {
+	width: 82px;
+}
+legend + .control-group.uncrd-control-group-fix {
+	margin-top: 0;
+}
+.uncrd-form-fix {
+	margin-bottom: 0;
+}
+.uncrd-linklike {
+	color: #5b7f97;
+}
+.uncrd-hr-fix {
+	margin: 5px 0;
+}
+.uncrd-dl-fix {
+	margin: 0;
+}
+.uncrd-dl-fix.dl-horizontal dt {
+	text-align: left;
+	color: #999999;
+	font-weight: normal;
+}
+.uncrd-profile-more a {
+	display: block;
+	padding: 3px;
+	padding-left: 180px;
+}
+.uncrd-profile-more a:hover {
+	background-color: #e9edf1;
+	text-decoration: none;
+}
+.uncrd-profile-more-group {
+	text-align: center;
+	padding: 3px;
+}
+.uncrd-profile-more-group:hover {
+	background-color: #e9edf1;
+}
+.uncrd-profile-more-group a {
+	padding: 0 3px;
+}
+.uncrd-profile-more-white {
+	color: #ffffff;
+}
+.uncrd-profile-more-white:hover {
+	color: #ffffff;
+}
+.uncrd-profile-menu {
+	margin: 5px 0;
+}
+.uncrd-profile-submenu {
+	margin-left: 10px;
+}
+.uncrd-profile-menu li {
+	list-style: none outside none;
+}
+.uncrd-profile-menu li a {
+	display: block;
+	padding: 3px;
+	padding-left: 8px;
+}
+.uncrd-profile-menu li a:hover {
+	background-color: #e9edf1;
+	text-decoration: none;
+}
+.uncrd-header {
+	border-bottom: 2px solid #5b7f97;
+	color: #5b7f97;
+}
+.uncrd-header-text {
+	text-transform: uppercase;
+}
+.uncrd-header-with-bg {
+	background-color: #e1e7ed;
+	color: #0088cc;
+	padding: 5px;
+}
+.uncrd-header-with-bg .pull-right a {
+	padding-left: 5px;
+}
+.uncrd-header-with-bg-small {
+	padding: 1px 5px;
+}
+.uncrd-header-with-bg-small > a {
+	display: block;
+}
+.uncrd-block {
+	margin-top: 5px;
+	margin-bottom: 10px;
+}
+.uncrd-block .thumbnails {
+	margin-bottom: 0;
+}
+.icon-uncrd-arrow-right {
+	background: transparent url("icon-arrow.png") 0 0 no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.icon-uncrd-arrow-down {
+	background: transparent url("icon-arrow.png") -16px 0 no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.uncrd-friendsThumbs {
+	margin: 0;
+	padding: 0;
+	padding-top: 5px;
+	margin-bottom: 10px;	
+	list-style: none outside none;
+	background-color: #f0f0f0;
+}
+.uncrd-friendsThumbs > li {
+	float: left;
+	margin-left: 5px;
+	margin-bottom: 5px;
+}
+.uncrd-friendsThumb.uncrd-avatar-small > img,.uncrd-friendsThumb.uncrd-avatar-small .uncrd-avatar-nophoto {
+	width: 50px;
+	height: 50px;
+}
+.uncrd-friendsThumb.uncrd-avatar-small .uncrd-avatar-nophoto-1 {
+	background-image: url("no-avatar-male60.png");
+}
+.uncrd-friendsThumb.uncrd-avatar-small .uncrd-avatar-nophoto-2 {
+	background-image: url("no-avatar-female60.png");
+}
+.uncrd-nofriendsThumbs { 
+	margin: 0;
+	margin-bottom: 10px;
+	padding: 5px 0;
+	text-align: center;
+	background-color: #f0f0f0;
+}
+.uncrd-limited {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.uncrd-invisible-actions .uncrd-ia {
+	visibility: hidden;
+}
+.uncrd-invisible-actions:hover .uncrd-ia {
+	visibility: visible;
+}
+.uncrd-bg-on-hover:hover {
+	background-color: #f0f0f0;
+}
+.uncrd-loading-right {
+	position: absolute;
+	right: 0;
+	margin: 0 10px;
+	background-color: #ffffff;
+}
+.uncrd-loading {
+	display: inline-block;
+	position: absolute;
+	width: 32px;
+	height: 32px;
+	background: transparent url("loading.gif") 0 0 no-repeat;
+}
+.uncrd-loading-small {
+	display: inline-block;
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	background: transparent url("loading_16x16.gif") 0 0 no-repeat;
+}
+.uncrd-loading-right .uncrd-loading,.uncrd-loading-right .uncrd-loading-small,.uncrd-loading-right .uncrd-loading-text {
+	position: relative;
+	float:right;
+}
+.uncrd-popover-fix .close {
+	right: -10px;
+	top: -10px;
+}
+.uncrd-modal-alert-fix {
+	margin-bottom: 0;
+}
+.uncrd-messages-list {
+	max-height: 600px;
+	overflow: auto;
+}
+.uncrd-users-list {
+	height: 600px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
