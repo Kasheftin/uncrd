@@ -6,7 +6,7 @@ define(["jquery","knockout","eventsEmitter","windowManager"],function($,ko,Event
 		this.core = this;
 
 		this.config = {
-			publicBaseUrl: ""
+			publicBaseUrl: "/public"
 		}
 
 		this.router = {
