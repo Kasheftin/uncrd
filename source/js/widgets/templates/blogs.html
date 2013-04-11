@@ -1,0 +1,91 @@
+<!-- uncrd if: showHeader -->
+	<div class="uncrd-header clearfix">
+		<div class="pull-left">
+			<a href="#" data-uncrd="css:{'icon-uncrd-arrow-right':isHidden(),'icon-uncrd-arrow-down':!isHidden()},click:showSwitch"></a>
+			<strong class="uncrd-header-text">
+				Блог <span data-uncrd="text:header"></span>
+				<!-- uncrd if: section()>0 -->
+					&nbsp;&gt;&gt;&nbsp;<span data-uncrd="text:sectionTitle"></span>
+				<!-- /uncrd -->
+			</strong>
+		</div>
+		<div class="pull-right">
+			<!-- uncrd if: section() > 0 -->
+				<a href="#" data-uncrd="click:clearSection">Все разделы</a>
+			<!-- /uncrd -->
+			<a href="#" data-uncrd="click:showMore,visible:isHidden">Показать блоги</a>
+			<!-- uncrd if: createBlogEnabled -->
+				<a href="#" data-uncrd="click:o({name:'blogForm',windowName:'blogForm',to_type:to_type,to_id:to_id,onUpdate:onUpdate,blogsSections:data().blogsSections})">Написать</a>
+			<!-- /uncrd -->
+		</div>
+	</div>
+<!-- /uncrd -->
+<!-- uncrd if: loading -->
+	<div class="uncrd-loading-with-icon">Загрузка...</div>
+<!-- /uncrd -->
+<!-- uncrd ifnot: loading -->
+	<div class="uncrd-block alert alert-info" data-uncrd="visible:showNoMessagesAlert() && noBlogs()">Блогов не найдено</div>
+	<div class="uncrd-block" data-uncrd="template:{name:'blogEntry',foreach:blogs,as:'blog'}"></div>
+	<div class="uncrd-profile-more-group" data-uncrd="visible:!isHidden()&&!loadingAdd()">
+		<a href="#" data-uncrd="click:showMore,visible:showMoreEnabled">Показать еще</a>
+		<a href="#" data-uncrd="click:showLess,visible:showLessEnabled">Свернуть</a>
+		<a class="uncrd-profile-more-white" href="#" data-uncrd="click:showNone,visible:showLessEnabled">Свернуть все</a>
+	</div>
+	<div class="uncrd-profile-more-group" data-uncrd="visible:loadingAdd">
+		<div class="uncrd-loading-with-icon-small">Загрузка...</div>
+	</div>
+<!-- /uncrd -->
+
+<script type="text/template" id="blogEntry">
+<!-- uncrd if: blog.isLoaded -->
+	<div class="uncrd-profile-blog-block">
+		<div class="uncrd-profile-more-group clearfix">
+			<div class="pull-left"><big data-uncrd="text:blog.data.title"></big></div>
+			<!-- uncrd if: blog.data.textShortExists -->
+				<div class="pull-right">
+					<a class="uncrd-profile-more-white" href="#" data-uncrd="click:blog.switchFull,text:blog.showFull()?'свернуть':'развернуть'"></a>
+				</div>
+			<!-- /uncrd -->
+		</div>
+		<!-- uncrd if: blog.showFull() || !blog.data.textShortExists -->
+			<div data-uncrd="html:blog.data.text"></div>
+		<!-- /uncrd -->
+		<!-- uncrd ifnot: blog.showFull() && blog.data.textShortExists -->
+			<div data-uncrd="html:blog.data.textShort"></div>
+		<!-- /uncrd -->
+		<div>
+			<small>
+				<span data-uncrd="text:blog.data.printDateTime"></span>
+				<!-- uncrd if: blog.section -->
+					&nbsp;|&nbsp;
+					<a href="#" data-uncrd="click:blog.setSection,text:blog.sectionTitle"></a>
+				<!-- /uncrd -->
+				<!-- uncrd if: blog.data.textShortExists -->
+					&nbsp;|&nbsp;
+					<a href="#" data-uncrd="click:blog.switchFull,text:blog.showFull()?'свернуть':'развернуть'"></a>
+				<!-- /uncrd -->
+				<!-- uncrd if: blog.commentsCnt() > 0 -->
+					&nbsp;|&nbsp;
+					<a href="#" data-uncrd="click:blog.switchComments,text:blog.showComments()?'скрыть комментарии':'показать комментарии [' + blog.commentsCnt() + ']'"></a>
+				<!-- /uncrd -->
+				<!-- uncrd if: blog.commentsCnt() == 0 -->
+					&nbsp;|&nbsp;
+					<a href="#" data-uncrd="click:blog.switchComments">оставить комментарий</a>
+				<!-- /uncrd -->
+				<!-- uncrd if: my -->
+					&nbsp;|&nbsp;
+					<a href="#" class="uncrd-loading-after" data-uncrd="click:editBlog">редактировать</a>
+					&nbsp;|&nbsp;
+					<a href="#" data-uncrd="click:destroyBlog">удалить</a>
+				<!-- /uncrd -->
+			</small>
+		</div>
+		<!-- uncrd if: blog.showComments -->
+			<div class="uncrd-profile-blog-comments-header">Комментарии</div>
+			<div class="uncrd-profile-blog-comments">
+				<!-- uncrd widget: {name:'stena',to_type:3,to_id:blog.id,data:comments,unlimited:true,showHeader:false,to:0,allowDestroy:my} --><!-- /uncrd -->
+			</div>
+		<!-- /uncrd -->
+	</div>
+<!-- /uncrd -->
+</script>

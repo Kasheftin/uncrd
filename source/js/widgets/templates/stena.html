@@ -67,6 +67,10 @@
 				<span data-uncrd="text:stena.printDateTime"></span>
 				&nbsp;|&nbsp;
 				<a href="#" data-uncrd="click:stena.form.move">ответить</a>
+				<!-- uncrd if: stena.allowDestroy -->
+					&nbsp;|&nbsp;
+					<a href="#" data-uncrd="click:stena.destroy">удалить</a>
+				<!-- /uncrd -->
 			</small></div>
 			<form data-uncrd="submit:stena.form.send,visible:stena.form.to()==stena.id">
 				<textarea class="input-block-level" data-uncrd="value:stena.form.text,valueUpdate:'afterkeydown',executeOnEnter:stena.form.send"></textarea>

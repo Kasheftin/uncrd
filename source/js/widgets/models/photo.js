@@ -69,6 +69,12 @@ define(["jquery","knockout"], function($,ko) {
 				});
 			}
 
+			rw.my = ko.computed(function() {
+				if (!self.core.user()) return false;
+				if (rw.user.id == self.core.user().id) return true;
+				return false;
+			});
+
 			self.photoLoading(true);
 			var img = document.createElement("img");
 			img.onload = function() {

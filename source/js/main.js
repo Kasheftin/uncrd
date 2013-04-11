@@ -11,7 +11,7 @@ require.config({
   }
 });
 
-require(["jquery","knockout","core","stringTemplateEngine","widgetBinding","popoverBinding","executeOnEnterBinding","knockout-repeat","jquery-cookie","jquery-animateBackgroundColor"],function($,ko,Core) {
+require(["jquery","knockout","core","stringTemplateEngine","widgetBinding","popoverBinding","executeOnEnterBinding","jquery-cookie","jquery-textarea-caret","jquery-animateBackgroundColor"],function($,ko,Core) {
   var core = new Core();
   core.on("ready",function() {
     ko.applyBindings(core);

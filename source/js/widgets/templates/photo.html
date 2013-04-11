@@ -18,7 +18,7 @@
 				<!-- uncrd if: photo().commentsData.posts.length > 0 -->
 					<h4>Комментарии</h4>
 				<!-- /uncrd -->
-				<!-- uncrd widget: {name:'stena',actions:{get:'getPhotoComments',create:'createPhotoComment'},to_id:photoId(),data:photo().commentsData,modalWindow:modalWindow,unlimited:true,showHeader:false,to:0,addCommentHeader:'Ваш комментарий'} --><!-- /uncrd -->
+				<!-- uncrd widget: {name:'stena',actions:{get:'getPhotoComments',create:'createPhotoComment',destroy:'destroyPhotoComment'},to_id:photoId(),data:photo().commentsData,modalWindow:modalWindow,unlimited:true,showHeader:false,to:0,addCommentHeader:'Ваш комментарий',allowDestroy:photo().my} --><!-- /uncrd -->
 			</div>
 			<div class="span2">
 				<dl class="uncrd-dl-fix">

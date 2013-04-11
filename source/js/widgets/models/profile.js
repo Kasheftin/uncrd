@@ -35,6 +35,7 @@ define(["jquery","knockout"], function($,ko) {
 		this.to_id = ko.computed(function() {
 			return self.user() ? self.user().id : 0;
 		});
+
 		this.stenaData = ko.computed({
 			read: function() {
 				return self.user() ? {posts:self.user().stena,users:self.user().users} : {};
@@ -66,6 +67,30 @@ define(["jquery","knockout"], function($,ko) {
 				}
 			}
 		});
+		this.albumsHeader = ko.computed(function() {
+			return self.user() ? self.user().name : "";
+		});
+
+		this.blogsData = ko.computed({
+			read: function() {
+				return self.user() ? {blogsIndex:self.user().blogsIndex,users:self.user().users,blogsComments:self.user().blogsComments,blogsSections:self.user().blogsSections,blogsData:self.user().blogsData} : {};
+			},
+			// Здесь добавим write чтобы сохранить целостность когда в stena.js происходит добавление записи
+			write: function(v) {
+				if (self.user()) {
+					var u = self.user();
+					u.blogsIndex = v.blogsIndex;
+					u.blogsData = v.blogsData;
+					u.users = v.users;
+					u.blogsComments = v.blogsComments;
+					u.blogsSections = v.blogsSections;
+					self.user(u);
+				}
+			}
+		});
+		this.blogsHeader = ko.computed(function() {
+			return self.user() ? self.user().name : "";
+		});
 
 		this.friendsData = ko.computed({
 			read: function() {
@@ -81,9 +106,6 @@ define(["jquery","knockout"], function($,ko) {
 			}
 		})
 
-		this.albumsHeader = ko.computed(function() {
-			return self.user() ? self.user().name : "";
-		});
 
 		this.statusText = ko.computed(function() {
 			return self.user() ? self.user().status : "";

@@ -151,29 +151,9 @@ define(["jquery","knockout","eventsEmitter"],function($,ko,EventsEmitter) {
 
 		// Первый блин. Здесь втыкаем иконку загрузки к ссылке или объекту, который вызвал open
 		if (inputData.event && inputData.event.currentTarget) {
-			var elem = $(inputData.event.currentTarget);
-			var loadings = ["over","after","before","after-inside"];
-			var loading = inputData.loading;
-			$.each(loadings,function(i,v) { 
-				if (!loading && elem.hasClass("uncrd-loading-" + v)) loading = v;
-			});
-			if (loading) {
-				data.loadingIcon = $("<div />",{"class":"uncrd-loading-absolute"}).insertAfter(elem);
+			data.loadingIcon = self.core.drawLoadingIcon(inputData.event,inputData.loading);
+			if (data.loadingIcon)
 				data.loadingIsShown = true;
-				var p = elem.position();
-				var w = Math.floor(elem.outerWidth()/2);
-				var h = Math.floor(elem.outerHeight()/2);
-				var w2 = Math.floor(data.loadingIcon.width()/2);
-				var h2 = Math.floor(data.loadingIcon.height()/2);
-				if (loading == "after")
-					data.loadingIcon.css({top:(p.top+h-h2).toString()+"px",left:(p.left+2*w).toString()+"px"});
-				else if (loading == "after-inside")
-					data.loadingIcon.css({top:(p.top+h-h2).toString()+"px",left:(p.left+2*w-2*w2).toString()+"px"});
-				else if (loading == "before")
-					data.loadingIcon.css({top:(p.top+h-h2).toString()+"px",left:(p.left-2*w2).toString()+"px"});
-				else
-					data.loadingIcon.css({top:(p.top+h-h2).toString()+"px",left:(p.left+w-w2).toString()+"px"});
-			}
 		}
 
 		// Если иконка загрузки была показана, то не нужно рисовать модальное окно со своей загрузкой, пока последнее не загрузится. 

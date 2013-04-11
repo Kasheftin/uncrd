@@ -93,6 +93,36 @@ define(["config","jquery","knockout","auth","eventsEmitter","windowManager","rou
 			},request));
 		}
 
+		// TODO: move somewhere
+		this.drawLoadingIcon = function(e,loading) {
+			var elem = $(e.currentTarget);
+			var loadings = ["over","after","before","after-inside"];
+			$.each(loadings,function(i,v) { 
+				if (!loading && elem.hasClass("uncrd-loading-" + v)) loading = v;
+			});
+			var found = false;
+			$.each(loadings,function(i,v) {
+				if (v == loading)
+					found = true;
+			});
+			if (!found) return null;
+			var loadingIcon = $("<div />",{"class":"uncrd-loading-absolute"}).insertAfter(elem);
+			var p = elem.position();
+			var w = Math.floor(elem.outerWidth()/2);
+			var h = Math.floor(elem.outerHeight()/2);
+			var w2 = Math.floor(loadingIcon.width()/2);
+			var h2 = Math.floor(loadingIcon.height()/2);
+			if (loading == "after")
+				loadingIcon.css({top:(p.top+h-h2).toString()+"px",left:(p.left+2*w).toString()+"px"});
+			else if (loading == "after-inside")
+				loadingIcon.css({top:(p.top+h-h2).toString()+"px",left:(p.left+2*w-2*w2).toString()+"px"});
+			else if (loading == "before")
+				loadingIcon.css({top:(p.top+h-h2).toString()+"px",left:(p.left-2*w2).toString()+"px"});
+			else
+				loadingIcon.css({top:(p.top+h-h2).toString()+"px",left:(p.left+w-w2).toString()+"px"});
+			return loadingIcon;
+		}
+
 		// TODO: move to user actions
 		this.isFriend = function(user,to_id) {
 			if (user && user.friends.length > 0 && to_id > 0)

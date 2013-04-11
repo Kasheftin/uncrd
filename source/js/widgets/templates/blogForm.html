@@ -1,0 +1,41 @@
+<div>
+<!-- uncrd if: loading -->
+	<div class="uncrd-loading-with-icon">Загрузка...</div>
+<!-- /uncrd -->
+<!-- uncrd ifnot: loading -->
+	<form data-uncrd="submit:form.send" class="uncrd-form-fix">
+		<fieldset>
+			<label for="postTitle">Заголовок:</label>
+			<input type="text" id="postTitle" class="input-block-level" data-uncrd="value:form.title,valueUpdate:'afterkeydown'" />
+			<div class="row">
+				<div class="span3">
+					<label for="postSection">Раздел:</label>
+					<select id="postSection" class="input-block-level" data-uncrd="options:blogsSections,optionsText:'title',optionsValue:'id',value:form.section"></select>
+				</div>
+				<div class="span4" data-uncrd="visible:createNewSection">
+					<label for="postNewSection">Название нового раздела:</label>
+					<input type="text" class="input-block-level" id="postNewSection" data-uncrd="value:form.newSectionTitle,valueUpdate:'afterkeydown'" />
+				</div>
+			</div>
+			<label for="messageText">Текст:</label>
+			<div class="btn-toolbar">
+				<div class="btn-group">
+					<a class="btn" href="#" data-uncrd="click:add('b')"><i class="icon-bold"></i></a>
+					<a class="btn" href="#" data-uncrd="click:add('i')"><i class="icon-italic"></i></a>
+				</div>
+				<div class="btn-group">
+					<a class="btn" href="#" data-uncrd="click:add('left')"><i class="icon-align-left"></i></a>
+					<a class="btn" href="#" data-uncrd="click:add('center')"><i class="icon-align-center"></i></a>
+					<a class="btn" href="#" data-uncrd="click:add('right')"><i class="icon-align-right"></i></a>
+				</div>
+				<div class="btn-group">
+					<a class="btn" href="#" data-uncrd="click:add('img')"><i class="icon-picture"></i></a>
+					<a class="btn" href="#" data-uncrd="click:add('url')"><i class="icon-tag"></i></a>
+					<a class="btn" href="#" data-uncrd="click:add('email')"><i class="icon-envelope"></i></a>
+				</div>
+			</div>
+			<textarea id="messageText" class="input-block-level uncrd-profile-blog-textarea" data-uncrd="value:form.text,valueUpdate:'afterkeydown'"></textarea>
+		</fieldset>
+	</form>
+<!-- /uncrd -->
+</div>

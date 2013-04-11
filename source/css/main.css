@@ -87,6 +87,14 @@
 	display: table;
 	margin: 0 auto;
 }
+.uncrd-loading-with-icon-small {
+	height: 16px;
+	padding-left: 20px;
+	background: transparent url("loading_16x16.gif") 0 2px no-repeat;
+	display: table;
+	margin: 0 auto;
+}
+
 .uncrd-loading-i-icon {
 	background: transparent url("loading_16x16.gif") 0 0 no-repeat;
 	display: inline-block;
@@ -230,6 +238,25 @@ legend + .control-group.uncrd-control-group-fix {
 	background-color: #e9edf1;
 	text-decoration: none;
 }
+.uncrd-profile-blog-block {
+}
+.uncrd-profile-blog-block + .uncrd-profile-blog-block {
+	border-top: 1px dotted #dedede;
+	margin-top: 20px;
+}
+.uncrd-profile-blog-comments-header{
+	color: #c0c0c0;
+	margin-top: 3px;
+	text-transform: uppercase;
+}
+.uncrd-profile-blog-comments {
+	border: 1px dotted #dedede;
+	padding: 5px;
+}
+.uncrd-profile-blog-textarea {
+	height: 300px;
+}
+
 
 
 

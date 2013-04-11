@@ -9,7 +9,7 @@ define(["jquery","knockout"], function($,ko) {
 		this.order = this.asObservable(d.order,"");
 
 		// этот виджет грузит стену и комментарии к фоткам, action - тип, идет в ajax
-		this.actions = this.asObservable(d.actions,{get:"getStena",create:"createStena"});
+		this.actions = this.asObservable(d.actions,{get:"getStena",create:"createStena",destroy:"destroyStena"});
 
 		// сколько записей выводить (рутовых, т.е. записей с parent=0 + все ответы на запись тоже выводятся)
 		// если unlimited, выводятся все записи и нет контрола на "показать больше/меньше"
@@ -29,6 +29,8 @@ define(["jquery","knockout"], function($,ko) {
 		// если data не передана, делается запрос с этими параметрами
 		this.to_type = this.asObservable(d.to_type,0);
 		this.to_id = this.asObservable(d.to_id,0);
+
+		this.allowDestroy = this.asObservable(d.allowDestroy,false);
 
 		this.loading = ko.observable(false);
 		this.modalWindow = o.options.modalWindow;
@@ -158,6 +160,25 @@ define(["jquery","knockout"], function($,ko) {
 							self.open({name:"profile",id:id,loading:"after"},context,e);
 					}
 				}(ar[i].user.id);
+				ar[i].allowDestroy = self.allowDestroy;
+				ar[i].destroy = function(i,rw) {
+					return function(context,e) {
+						self.open({name:"confirm",windowName:"confirm",message:"Вы уверены что хотите удалить этот комментарий?",onConfirm:function() {
+							self.core.apiCall({
+								data: {
+									action: self.actions().destroy,
+									id: rw.id
+								},
+								success: function(result) {
+									if (result.success)
+										self.destroyStena(i);
+									if (result.error)
+										self.core.error(result.error);
+								}
+							});
+						}});
+					}
+				}(i,ar[i]);
 				if (ar[i].parent > 0) {
 					for (var j = 0; j < i; j++)
 						if (ar[j].id == ar[i].parent) {
@@ -172,6 +193,13 @@ define(["jquery","knockout"], function($,ko) {
 					out.push(ar[i]);
 			return out;
 		});
+
+		this.destroyStena = function(i) {
+			var d = self.data();
+			if (i >= 0) d.posts.splice(i,1);
+			self.data(d);
+			self.data.notifySubscribers();
+		}
 
 		this.stenaLimited = ko.computed(function() {
 			if (!self.unlimited() && self.limit() <= 0) return [];
