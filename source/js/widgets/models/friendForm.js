@@ -71,8 +71,11 @@ define(["jquery","knockout"], function($,ko) {
 							var u = self.core.user();
 							u.friends = result.data.friends;
 							self.core.user(u);
-							self.core.open({name:"alert",windowName:"alert",type:"info",message:result.success});
-							self.modalWindow.destroy();
+							console.log("set user =",self.core.user(),self.core.user().friends);
+							self.core.user.notifySubscribers();
+							self.core.open({name:"alert",windowName:"alert",type:"info",message:result.success,callback: function() {
+								self.modalWindow.destroy();
+							}});
 						}
 						if (result.error) {
 							self.core.error(result.error);
@@ -92,7 +95,7 @@ define(["jquery","knockout"], function($,ko) {
 		this.modalWindow.footerWidget({
 			name: "friendFormFooter",
 			modalWindow: self.modalWindow,
-			isFriend: self.isFriend,
+			action: self.action,
 			form: self.form
 		});
 

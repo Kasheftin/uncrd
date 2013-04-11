@@ -1,5 +1,5 @@
 <span data-uncrd="visible:!form.loading()">
-	<button class="btn btn-primary" data-uncrd="click:form.send,text:isFriend?'Удалить из друзей':'Добавить в друзья'"></button>
+	<button class="btn btn-primary" data-uncrd="click:form.send,text:action=='remove'?'Удалить из друзей':'Добавить в друзья'"></button>
 </span>
 <span data-uncrd="visible:form.loading">
 	<a class="btn disabled" href="#"><i class="uncrd-loading-i-icon"></i> Отправляем...</a>

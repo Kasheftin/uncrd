@@ -26,7 +26,7 @@ define(["jquery","knockout"], function($,ko) {
 				success: function(result) {
 					self.loading(false);
 					if (result.success) {
-						self.data({friends:result.data.friends});
+						self.data({friends:result.data.friends,users:result.data.users});
 					}
 					if (result.error) {
 						self.core.error(result.error);

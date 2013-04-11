@@ -3,7 +3,7 @@ define(["jquery","knockout"], function($,ko) {
 		var self = this;
 		var d = o.options;
 		this.form = d.form;
-		this.isFriend = d.isFriend;
+		this.action = d.action;
 		this.modalWindow = d.modalWindow;
 		this.close = function() {
 			self.modalWindow.destroy();
