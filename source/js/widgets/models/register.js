@@ -2,7 +2,10 @@ define(["jquery","knockout"],function($,ko) {
 	var RegisterPage = function(o) {
 		var self = this;
 
+console.log("RegisterPage",o);
+
 		this.title = ko.observable(o.options.title || "");
+		this.modalWindow = o.options.modalWindow;
 
 		this.instLogin = ko.observable("");
 		this.login = ko.computed(function() {
@@ -143,6 +146,8 @@ define(["jquery","knockout"],function($,ko) {
 					}
 					if (data.success) {
 						self.core.user(data.data.user);
+						self.core.auth.openNotifications();
+						self.modalWindow.destroy();
 						$.cookie("SID",data.data.user.SID,{path:"/"});
 					}
 				},

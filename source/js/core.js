@@ -11,6 +11,11 @@ define(["config","jquery","knockout","auth","eventsEmitter","windowManager","rou
 		// инфа о текущем пользователе и SID
 		this.user = ko.observable(null);
 
+		this.isReady = ko.observable(false);
+		this.on("binded",function() {
+			self.isReady(true);
+		});
+
 		// здесь храним данные, которые не меняются, из общих мелких таблиц. Если какой-нибудь ajax возвращает в результате common, складываем это в this.common
 		// например, countries, cities из геобазы
 		this.common = {countryGroups:{},countries:{},cities:{}};
@@ -85,6 +90,8 @@ define(["config","jquery","knockout","auth","eventsEmitter","windowManager","rou
 				dataType: "json",
 				data: {
 					SID: (this.user() ? this.user().SID : ""),
+					mss_login: (this.user() ? this.user().mss_login : ""),
+					mss_pwd: (this.user() ? this.user().mss_pwd : ""),
 					debug: true
 				},
 				error: function(jqXHR,textStatus,errorThrown) {

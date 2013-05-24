@@ -2,13 +2,17 @@ define(["jquery","knockout","eventsEmitter"],function($,ko,EventsEmitter) {
 	var Auth = function(core) {
 		var self = this;
 
-		// Вставим сюда валидацию данных юзера и вывод окон
-		core.user.subscribe(function(rw) {
-			if (rw && rw.id > 0) {
-				if ((parseInt(rw.city_id) == 0 || parseInt(rw.country_id) == 0 || parseInt(rw.photo_exist) == 0) && !$.cookie("disableNotifications"))
+		var ar = window.location.host.split(/\./);
+		this.host = ar[ar.length-2] + "." + ar[ar.length-1];
+		console.log("host",this.host,ar);
+
+
+		this.openNotifications = function() {
+			if (core.user() && core.user().id > 0) {
+				if ((parseInt(core.user().city_id) == 0 || parseInt(core.user().country_id) == 0 || parseInt(core.user().photo_exist) == 0) && !$.cookie("disableNotifications"))
 					core.open({name:"userDataNotifications",windowName:"alert"});
 			}
-		});
+		}
 
 		var LoginForm = function() {
 			var self = this;
@@ -40,7 +44,11 @@ define(["jquery","knockout","eventsEmitter"],function($,ko,EventsEmitter) {
 						}
 						if (data.success) {
 							core.user(data.data.user);
-							$.cookie("SID",data.data.user.SID,{path:"/",expires:self.rememberme() ? 14 : null});
+							core.auth.openNotifications();
+							var params = {path:"/",domain:core.auth.host,expires:self.rememberme() ? 14 : null};
+							$.cookie("SID",data.data.user.SID,params);
+							$.cookie("mss_login",data.data.user.mss_login,$.extend(params,{expires:30}));
+							$.cookie("mss_pwd",data.data.user.mss_pwd,$.extend(params,{expires:30}));
 							self.login("");
 							self.password("");
 						}
@@ -65,7 +73,13 @@ define(["jquery","knockout","eventsEmitter"],function($,ko,EventsEmitter) {
 						core.error(data.error);
 					if (data.success) {
 						core.user(null);
+						$.cookie("SID",null,{path:"/",domain:self.host});
 						$.removeCookie("SID");
+						$.cookie("mss_login",null,{path:"/",domain:self.host});
+						$.removeCookie("mss_login");
+						$.cookie("mss_pwd",null,{path:"/",domain:self.host});
+						$.removeCookie("mss_pwd");
+						console.log($.cookie("mss_login"),$.cookie("mss_pwd"),self.host);
 						core.open({name:"alert",windowName:"alert",type:"info",message:data.success});
 					}
 				}
@@ -74,16 +88,23 @@ define(["jquery","knockout","eventsEmitter"],function($,ko,EventsEmitter) {
 
 		this.initialize = function() {
 			var SID = $.cookie("SID");
-			if (SID && SID.length > 0) {
+			var mss_login = $.cookie("mss_login");
+			var mss_pwd = $.cookie("mss_pwd");
+			if (SID && SID.length > 0 || (mss_login && mss_login.length>0 && mss_pwd && mss_pwd.length>0)) {
 				core.apiCall({
 					data: {
 						action: "auth",
-						SID: SID
+						SID: SID,
+						mss_login: mss_login,
+						mss_pwd: mss_pwd
 					},
 					success: function(data,textStatus,jqXHR) {
-						if (data.success)
+						if (data.success) {
 							core.user(data.data.user);
+							self.openNotifications();
+						}
 						else {
+							$.cookie("SID",null,{path:"/",domain:self.host});
 							$.removeCookie("SID");
 							core.user(null);
 						}

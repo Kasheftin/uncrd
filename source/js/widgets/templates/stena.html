@@ -1,7 +1,7 @@
 <!-- uncrd if: showHeader -->
 	<div class="uncrd-header clearfix">
 		<div class="pull-left">
-			<a href="#" data-uncrd="css:{visible:!unlimited(),'icon-uncrd-arrow-right':showEnabled(),'icon-uncrd-arrow-down':!showEnabled()},click:showSwitch"></a>
+			<a href="#" data-uncrd="css:{visible:!unlimited(),'icon-uncrd-arrow-right':isHidden(),'icon-uncrd-arrow-down':!isHidden()},click:showSwitch"></a>
 			<strong class="uncrd-header-text">Стена <span data-uncrd="text:header"></span></strong>
 		</div>
 		<div class="pull-right">
@@ -31,7 +31,7 @@
 			</span>
 		</form>
 	</div>
-	<div class="uncrd-block alert alert-info" data-uncrd="visible:showNoMessagesAlert() && stena().length==0">Сообщений не найдено</div>
+	<div class="uncrd-block alert alert-info" data-uncrd="visible:showNoMessagesAlert() && stena().length==0 && !isHidden()">Сообщений не найдено</div>
 	<div class="uncrd-block" data-uncrd="template:{name:'stenaEntry',foreach:stenaLimited,as:'stena'}"></div>
 	<div class="uncrd-block" data-uncrd="visible:order()=='' && form.to()==0">
 		<!-- uncrd if: addCommentHeader().length > 0 -->

@@ -18,7 +18,7 @@ define(["jquery","knockout","eventsEmitter"],function($,ko,EventsEmitter) {
 					if (ar1[0].length > 0 && ar1[1].length > 0)
 						obj[ar1[0]] = ar1[1];
 				});
-				if (obj.name && (obj.name == "photo" || obj.name == "profile"))
+				if (obj.name && (obj.name == "photo" || obj.name == "profile" || obj.name == "video"))
 					self.core.open(obj);
 			}
 			self._disableHashChange = false;

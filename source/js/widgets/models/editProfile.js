@@ -6,6 +6,7 @@ define(["jquery","knockout"],function($,ko) {
 		this.loading = ko.observable(false);
 		this.modalWindow = o.options.modalWindow;
 		this.modalWindow.width(600);
+		this.modalWindow.cssPosition("absolute");
 		this.modalWindow.header("Редактирование профиля");
 
 		this.name = ko.observable("");

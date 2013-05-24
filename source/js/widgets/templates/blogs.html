@@ -24,9 +24,9 @@
 	<div class="uncrd-loading-with-icon">Загрузка...</div>
 <!-- /uncrd -->
 <!-- uncrd ifnot: loading -->
-	<div class="uncrd-block alert alert-info" data-uncrd="visible:showNoMessagesAlert() && noBlogs()">Блогов не найдено</div>
+	<div class="uncrd-block alert alert-info" data-uncrd="visible:showNoMessagesAlert() && noBlogs() && !isHidden()">Блогов не найдено</div>
 	<div class="uncrd-block" data-uncrd="template:{name:'blogEntry',foreach:blogs,as:'blog'}"></div>
-	<div class="uncrd-profile-more-group" data-uncrd="visible:!isHidden()&&!loadingAdd()">
+	<div class="uncrd-profile-more-group" data-uncrd="visible:!isHidden()&&!loadingAdd()&&!noBlogs()">
 		<a href="#" data-uncrd="click:showMore,visible:showMoreEnabled">Показать еще</a>
 		<a href="#" data-uncrd="click:showLess,visible:showLessEnabled">Свернуть</a>
 		<a class="uncrd-profile-more-white" href="#" data-uncrd="click:showNone,visible:showLessEnabled">Свернуть все</a>

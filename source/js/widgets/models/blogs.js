@@ -20,6 +20,7 @@ define(["jquery","knockout"], function($,ko) {
 		this.loadingAdd = ko.observable(false);
 		this.modalWindow = o.options.modalWindow;
 
+
 		// Этот метод грузит начальные данные виджета если они не переданы
 		this.loadData = function() {
 			self.loading(true);

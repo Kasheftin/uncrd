@@ -3,6 +3,16 @@
 <!-- /uncrd -->
 <!-- uncrd ifnot: loading -->
 	<!-- uncrd if: user -->
+
+		<div class="uncrd-window-fakeHeader clearfix">
+			<div class="pull-left">
+				<h3 data-uncrd="text:user().name"></h3>
+			</div>
+			<div class="pull-right muted uncrd-window-fakeHeader-right">
+				<span data-uncrd="text:user().ageString + (user().sex==1?', мужчина':(user().sex==2?', девушка':''))"></span>
+			</div>
+		</div>
+
 		<div class="row">
 			<div class="span2">
 				<!-- uncrd widget:{name:'userAvatar',user:user,type:'middle'} --><!-- /uncrd -->
@@ -31,10 +41,13 @@
 				<!-- uncrd widget: {name:'friends',to_type:to_type,to_id:to_id,data:friendsData,modalWindow:modalWindow,open:open,template:'friendsThumbs'} --><!-- /uncrd -->
 			</div>
 			<div class="span6">
+				<!-- uncrd widget:"registerTop" --><!-- /uncrd -->
+				<!--
 				<div class="clearfix">
 					<div class="uncrd-linklike pull-left"><strong data-uncrd="text:user().name"></strong></div>
 					<div class="pull-right muted" data-uncrd="text:user().ageString"></div>
 				</div>
+				-->
 				<div class="clearfix" data-uncrd="widget:{name:'userStatus',user:user}"></div>
 				<hr class="uncrd-hr-fix" />
 				<div class="uncrd-block">
@@ -49,6 +62,17 @@
 					<!-- /uncrd -->
 					<!-- uncrd if: fullInfo -->
 						<div class="uncrd-profile-more"><a href="#" data-uncrd="click:hideFullInfo">Скрыть подробную информацию</a></div>
+						<!-- uncrd if: user().contacts -->
+							<div class="uncrd-header">Контактная информация</div>
+							<div class="uncrd-block">
+								<dl class="dl-horizontal uncrd-dl-fix" data-uncrd="foreach:user().contacts">
+									<!-- uncrd if: value -->
+										<dt data-uncrd="text:title"></dt>
+										<dd data-uncrd="text:value"></dd>
+									<!-- /uncrd -->
+								</dl>
+							</div>
+						<!-- /uncrd -->
 						<!-- uncrd foreach: user().anket -->
 							<!-- uncrd if: is_filled > 0 -->
 								<div class="uncrd-header" data-uncrd="text:name"></div>

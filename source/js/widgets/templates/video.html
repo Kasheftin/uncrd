@@ -1,0 +1,33 @@
+<!-- uncrd if: loading -->
+	<div class="uncrd-loading-with-icon">Загрузка...</div>
+<!-- /uncrd -->
+<!-- uncrd if: !loading() && video() -->
+	<!-- uncrd widget:"registerTop" --><!-- /uncrd -->
+	<div class="uncrd-video-container" style="width:800px;height:600px;">
+		<div class="uncrd-video" data-uncrd="html:video().html"></div>
+		<div class="row">
+			<div class="span6">
+				<!-- uncrd if: video().commentsData.posts.length > 0 -->
+					<h4>Комментарии</h4>
+				<!-- /uncrd -->
+				<!-- uncrd widget: {name:'stena',actions:{get:'getVidzComments',create:'createVidzComment',destroy:'destroyVidzComment'},to_id:videoId(),data:video().commentsData,modalWindow:modalWindow,unlimited:true,showHeader:false,to:0,addCommentHeader:'Ваш комментарий',allowDestroy:video().my} --><!-- /uncrd -->
+			</div>
+			<div class="span2">
+				<dl class="uncrd-dl-fix">
+					<dt>Видео:</dt>
+					<dd data-uncrd="text:video().title||'#'+video().id"></dd>
+					<dt>Длительность:</dt>
+					<dd data-uncrd="text:video().printDuration"></dd>
+					<dt>Размер:</dt>
+					<dd data-uncrd="text:video().printSize"></dd>
+					<dt>Автор:</dt>
+					<dd>
+						<a href="#" data-uncrd="text:video().user.name,click:core.o({name:'profile',id:video().user.id,loading:'after'})"></a>
+					</dd>
+					<dt>Загружено:</dt>
+					<dd data-uncrd="text:video().printDate"></dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+<!-- /uncrd -->

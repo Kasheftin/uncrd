@@ -7,7 +7,7 @@
 			<div class="alert alert-success clearfix">
 				<p>
 					Благодарим за регистрацию, теперь Вам доступны все возможности системы.
-					Для начала Вы можете посетить <a href="#">страницу своего профиля</a> и <a href="#">добавить свои контактные данные</a>.
+					Для начала Вы можете посетить <a href="#" data-uncrd="click:o('profile')">страницу своего профиля</a> и <a href="#" data-uncrd="click:o('editProfile')">добавить свои контактные данные</a>.
 				</p>
 			</div>
 		<!-- /uncrd -->
@@ -15,19 +15,17 @@
 			<div class="alert alert-info clearfix">
 				<p>Пользователи сайта будут к вам испытывать гораздо большее доверие, если Вы загрузите свою фотографию.</p>
 				<div class="pull-right">
-					<button class="btn btn-primary">Загрузить фотографию</button>
-					<button class="btn">Больше не показывать</button>
+					<button class="btn btn-primary" data-uncrd="click:o('profile')">Загрузить фотографию</button>
 				</div>
 			</div>
 		<!-- /uncrd -->
-		<!-- uncrd with: autoGeoLocation -->
+		<!-- uncrd if: showAutoGeoLocation -->
 			<div class="alert alert-info clearfix">
 				<p>В вашем профиле не было указано Ваше географическое положение. Оно было проставлено автоматически: 
-				<strong data-uncrd="text:locationText"></strong></p>
+				<strong data-uncrd="text:autoGeoLocation"></strong></p>
 				<div class="pull-right">
-					<button class="btn">Изменить информацию</button>
-					<button class="btn">Больше не показывать</button>
-				</div>
+					<button class="btn" data-uncrd="click:o('editProfile')">Изменить информацию</button>
+ 				</div>
 			</div>
 		<!-- /uncrd -->
 	<!-- /uncrd -->

@@ -16,6 +16,8 @@ define(["jquery","knockout"],function($,ko) {
 		this.xOffset = ko.utils.unwrapObservable(d.xOffset) || 0;
 		this.yOffset = ko.utils.unwrapObservable(d.yOffset) || 0;
 
+		this.active = ko.observable(false);
+
 		// Либо указан content, либо widgetData и в widgetData есть name - имя загружаемого виджета
 		// Так вот, если widgetData нет или widgetData.name нет, то загрузка не требуется
 		// если указана page, то в контент window грузится виджет, ниже - его опции
@@ -62,6 +64,7 @@ define(["jquery","knockout"],function($,ko) {
 
 		// делаем position обычной observable а не computed потому что будем оптимизировать его расчет и количество пересчетов
 		this.position = ko.observable({});
+		this.fadePosition = ko.observable({});
 
 		var ww = null, wh = null, cw = null, ch = null;
 
@@ -133,6 +136,8 @@ define(["jquery","knockout"],function($,ko) {
 				p.position = self.cssPosition();
 
 			self.position(p);
+			p.height = ch + "px";
+			self.fadePosition(p);
 
 			if (update && !cycle) {
 				setTimeout(function() {
@@ -144,7 +149,6 @@ define(["jquery","knockout"],function($,ko) {
 					self.recalculatePosition(true,2);
 				},500);
 			}
-
 		}
 
 		this.recalculatePositionTrue = function(msg) {

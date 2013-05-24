@@ -19,15 +19,55 @@
 <div class="container main-container uncrd-container">
 	<div class="row">
 		<div class="span2">
-			<!-- uncrd if: user -->
-				<div>Привет, <span data-uncrd="text:user().name"></span></div>
-				<div><a data-uncrd="click:o('uploadPhoto')" href="#">Загрузить фото</a></div>
-			<!-- /uncrd -->
-			<!-- uncrd ifnot: user -->
-				<div data-uncrd="widget:{name:'loginForm',template:'loginFormMenu'}"></div>
-			<!-- /uncrd -->
+			<div style="display:none" data-uncrd="visible:isReady">
+				<!-- uncrd if: user -->
+					<div>Привет, <span data-uncrd="text:user().name"></span></div>
+					<div><a data-uncrd="click:o('uploadPhoto')" href="#">Загрузить фото</a></div>
+				<!-- /uncrd -->
+				<!-- uncrd ifnot: user -->
+					<div data-uncrd="widget:{name:'loginForm',template:'loginFormMenu'}"></div>
+				<!-- /uncrd -->
+			</div>
 		</div>
 		<div class="span10">
+
+			<h3>TODO</h3>
+			<ul>
+				<li>Полноценный оконный менеджер, несколько больших окон - правильный скролл, меняющийся в зависимости от активного окна, двойное затемнение (сильно затемнен контент, немного затемнены не активные окна).</li>
+				<li>Управление фотографиями (удаление - редактирование).</li>
+				<li>Фотографии только для друзей, проверять доступ, динамическая авторизация (=> появляются фото только для друзей).</li>
+				<li>HTML5 загрузчик фото.</li>
+				<li>Анимации.</li>
+				<li>Новости.</li>
+				<li>Лайки и избранное.</li>
+			</ul>
+
+
+			<h3>Виджет Videos</h3>
+			<div class="widget-example">
+				<ul class="thumbnails">
+					<li class="span2">
+						<a href="#" class="thumbnail" data-uncrd="click:o({name:'video',id:5264,loading:'over'})"><img src="http://phototag.ru/p409751_5264"></a>
+					</li>
+				</ul>
+			</div>
+			<div class="widget-example">
+				<div class="row">
+					<div class="span8" data-uncrd="widget:{name:'albums',to_id:410141,limit:8,limitStep:4}"></div>
+				</div>
+			</div>
+
+			<h3>Виджет Albums Or Photos</h3>
+			<div class="widget-example">
+				<div class="row">
+					<div class="span8" data-uncrd="widget:{name:'albums',to_id:10569,limit:8,limitStep:4}"></div>
+				</div>
+			</div>
+			<div class="widget-example">
+				<div class="row">
+					<div class="span8" data-uncrd="widget:{name:'albums',to_id:410141,limit:8,limitStep:4}"></div>
+				</div>
+			</div>
 
 			<h3>Фотки просто так</h3>
 			<ul class="thumbnails">
@@ -398,10 +438,14 @@
 	</div>
 </div>
 
-<script type="text/javascript"><!-- 
-var RndNum4NoCash = Math.round(Math.random() * 1000000000);
-document.write("<link href='http://uncrd.ragneta.com/css/main.css?rnd=" + RndNum4NoCash + "' rel='stylesheet' />");
-document.write("<script type='text/javascript' src='http://uncrd.ragneta.com/js/main.js?rnd=" + RndNum4NoCash + "'></script>");
+
+<script type="text/javascript"><!--
+(function() {
+	var RndNum4NoCash = Math.round(Math.random() * 1000000000); RndNum4NoCash = 0;
+	var us = document.createElement("script"); us.type = "text/javascript"; us.async = true; us.src = "http://uncrd.ragneta.com/js/main.js?rnd=" + RndNum4NoCash;
+	var uc = document.createElement("link"); uc.type = "text/css"; uc.rel = "stylesheet";  uc.href = "http://uncrd.ragneta.com/css/main.css?rnd=" + RndNum4NoCash;
+	var s = document.getElementsByTagName("head")[0]; s.appendChild(uc); s.appendChild(us);
+})();
 //--></script>
 
 </body>

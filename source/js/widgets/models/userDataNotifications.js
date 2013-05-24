@@ -9,6 +9,7 @@ define(["jquery","knockout","jquery-cookie"], function($,ko) {
 		else
 			this.modalWindow.header("Внимание");
 
+		this.showAutoGeoLocation = ko.observable(false);
 		this.autoGeoLocation = ko.observable(null);
 		this.loading = ko.observable(true);
 
@@ -19,7 +20,8 @@ define(["jquery","knockout","jquery-cookie"], function($,ko) {
 				},
 				success: function(result) {
 					if (result.success) {
-						self.autoGeoLocation(result.data.location);
+						self.autoGeoLocation(result.data.location.locationText);
+						self.showAutoGeoLocation(true);
 						var u = self.core.user();
 						u.city_id = result.data.location.city_id;
 						u.country_id = result.data.location.country_id;

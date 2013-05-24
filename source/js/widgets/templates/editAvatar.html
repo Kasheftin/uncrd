@@ -1,1 +1,25 @@
-Раздел находится в разработке
+<div class="row">
+	<div class="span1"></div>
+	<div class="span">
+		<form enctype="multipart/form-data" class="uncrd-form-fix" data-uncrd="submit:form.submit">
+			<fieldset>
+				<input type="hidden" name="MAX_FILE_SIZE" value="3000000" />
+				<input type="hidden" name="action" value="uploadAvatar" />
+				<input type="hidden" name="SID" value="" data-uncrd="value:core.user().SID">
+				<progress data-uncrd="visible:form.loading(),attr:{value:form.currentProgress(),max:form.totalProgress()}"></progress>
+				<label for="avatarfile">Загрузить новый аватар (*.jpg):</label>
+				<input type="file" id="avatarfile" name="avatarfile" />
+				<div class="form-actions">
+					<!-- uncrd ifnot: form.loading() -->
+						<button class="btn btn-primary" type="submit">Загрузить файл</button>
+						<button class="btn" type="submit" data-uncrd="click:form.submitDestroy">Удалить аватар</button>
+					<!-- /uncrd -->
+					<!-- uncrd if: form.loading() -->
+						<a class="btn disabled" href="#"><i class="uncrd-loading-i-icon"></i> Отправляем...</a>
+						<button class="btn" data-uncrd="click:form.cancelSend">Отменить</button>
+					<!-- /uncrd -->
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>

@@ -2,8 +2,9 @@
 	<div class="uncrd-loading-with-icon">Загрузка...</div>
 <!-- /uncrd -->
 <!-- uncrd ifnot: loading -->
+	<!-- uncrd widget:"registerTop" --><!-- /uncrd -->
 	<!-- uncrd if: mode() == "default" && photo() -->
-		<div class="uncrd-photo-container">
+		<div class="uncrd-photo-container" style="width:800px;height:600px;">
 			<!-- uncrd if: photoLoading -->
 				<div class="modal-body">
 					<div class="uncrd-loading-with-icon">Загрузка фото...</div>
@@ -32,6 +33,13 @@
 					<dd>
 						<a href="#" data-uncrd="text:photo().user.name,click:core.open.bind($data,{name:'profile',id:photo().user.id,loading:'after'})"></a>
 					</dd>
+					<!-- uncrd if: photo().my -->
+						<dt>Управление:</dt>
+						<dd>
+							<a href="#" data-uncrd="click:photo().editPhoto"><i class="icon-edit"></i>Изменить</a>
+							<a href="#" data-uncrd="click:photo().removePhoto"><i class="icon-remove"></i>Удалить</a>
+						</dd>
+					<!-- /uncrd -->
 				</dl>
 			</div>
 		</div>

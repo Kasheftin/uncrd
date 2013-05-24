@@ -3,8 +3,6 @@ define(["jquery","knockout"],function($,ko) {
 		var self = this;
 		var d = o.options;
 
-console.log("LoginRegister",d);
-
 		this.auth = this.core.auth;
 		this.modalWindow = d.modalWindow;
 		this.authCallback = d.authCallback;

@@ -234,11 +234,15 @@ define(["jquery","knockout"], function($,ko) {
 		}
 
 		this.showSwitch = function() {
-			if (self.showEnabled())
+			if (self.isHidden())
 				self.showMore();
 			else
 				self.showNone();
 		}
+
+		this.isHidden = ko.computed(function() {
+			return self.limit() == 0;
+		});
 
 		this.showMoreEnabled = ko.computed(function() {
 			return self.stena().length > 0 && self.limit() > 0 && self.stena().length != self.stenaLimited().length;

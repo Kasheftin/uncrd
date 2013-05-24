@@ -23,7 +23,12 @@
 .uncrd-modal-fix .modal-header {
 	border: 0;
 	cursor: move;
+	color: #5b7f97;
 }
+.uncrd-modal-fix .modal-header small {
+	color: #5b7f97;
+}
+
 .uncrd-modal-fix .modal-body {
 	max-height: none;
 }
@@ -53,6 +58,11 @@
 }
 .uncrd-unvisible {
 	visibility: hidden;
+}
+.uncrd-modal-fade {
+	position: absolute;
+	background-color: #000000;
+	opacity: 0.4;
 }
 
 /* иконка загрузки в разных вариантах */
@@ -105,6 +115,20 @@
 	width: 16px;
 }
 
+.uncrd-window-fakeHeader {
+	margin-top: -25px;
+}
+.uncrd-window-fakeHeader h3 {
+	margin: 0;
+	margin-bottom: 10px;
+	font-size: 25px;
+	color: #5b7f97;
+}
+.uncrd-window-fakeHeader-right {
+	margin-top: 10px;
+}
+
+
 /* стили для фото и картинок*/
 .uncrd-photo-container,.uncrd-photo-container > a {
 	width: 800px;
@@ -132,6 +156,10 @@
 	width: 170px;
 	height: 170px;
 	background-image: url("no-avatar-female.png");
+}
+.uncrd-video {
+	width: 500px;
+	margin: 0 auto;
 }
 
 /* хак для мелких картинок - иногда они не 140x105, а 140x104, и тогда глюк в списке */
@@ -171,6 +199,10 @@ legend + .control-group.uncrd-control-group-fix {
 .uncrd-form-fix {
 	margin-bottom: 0;
 }
+.uncrd-form-fix .form-actions {
+	background-color: transparent;
+	margin-bottom: 0;
+}
 
 
 /* стиль для обычного текста, который нужно покрасить в цвет ссылки */
@@ -200,7 +232,7 @@ legend + .control-group.uncrd-control-group-fix {
 	padding-left: 180px;
 }
 .uncrd-profile-more a:hover {
-	background-color: #e9edf1;
+	background-color: #d9dde1;
 	text-decoration: none;
 }
 .uncrd-profile-more-group {
@@ -208,7 +240,7 @@ legend + .control-group.uncrd-control-group-fix {
 	padding: 3px;
 }
 .uncrd-profile-more-group:hover {
-	background-color: #e9edf1;
+	background-color: #d9dde1;
 }
 .uncrd-profile-more-group a {
 	padding: 0 3px;
@@ -235,7 +267,7 @@ legend + .control-group.uncrd-control-group-fix {
 	padding-left: 8px;
 }
 .uncrd-profile-menu li a:hover {
-	background-color: #e9edf1;
+	background-color: #d9dde1;
 	text-decoration: none;
 }
 .uncrd-profile-blog-block {
@@ -295,11 +327,13 @@ legend + .control-group.uncrd-control-group-fix {
 	background: transparent url("icon-arrow.png") 0 0 no-repeat;
 	width: 16px;
 	height: 16px;
+	margin: -4px 10px 0 5px;
 }
 .icon-uncrd-arrow-down {
 	background: transparent url("icon-arrow.png") -16px 0 no-repeat;
 	width: 16px;
 	height: 16px;
+	margin: -4px 10px 0 5px;
 }
 
 
@@ -357,7 +391,22 @@ legend + .control-group.uncrd-control-group-fix {
 	background-color: #f0f0f0;
 }
 
-
+/* Блок с призывом к регистрации */
+.uncrd-registerTop {
+	border: 2px solid #5b7f97;
+	border-radius: 6px;
+	padding: 10px;
+	text-align: center;
+	margin-bottom: 10px;
+}
+.uncrd-registerTop .btn-large {
+	display: block;
+	margin: 0 auto;
+	margin-top: 5px;
+}
+.uncrd-registerTop .uncrd-text {
+	text-align: justify;
+}
 
 
 

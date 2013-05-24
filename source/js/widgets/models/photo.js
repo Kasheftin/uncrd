@@ -75,6 +75,14 @@ define(["jquery","knockout"], function($,ko) {
 				return false;
 			});
 
+			rw.editPhoto = function(obj,e) {
+				self.open({name:"photoForm",windowName:"photoForm",data:rw,blogsSections:self.data().blogsSections,id:rw.id,onUpdate:self.onUpdate},self,e);
+			}
+			
+			rw.removePhoto = function(obj,e) {
+				self.open({name:"photoRemoveForm",windowName:"photoRemoveForm",id:rw.id,onUpdate:self.onRemove},self,e);
+			}
+
 			self.photoLoading(true);
 			var img = document.createElement("img");
 			img.onload = function() {
@@ -138,10 +146,12 @@ define(["jquery","knockout"], function($,ko) {
 		this.openPhotoFromContext = function(photo_id) {
 			self.mode("default");
 			self.photoId(photo_id);
+			self.modalWindow.recalculatePosition(true);
 		}
 
 		this.openContext = function() {
 			self.mode("context");
+			self.modalWindow.recalculatePosition(true);
 		}
 
 		this.photoClick = function() {

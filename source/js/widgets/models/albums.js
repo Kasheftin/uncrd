@@ -4,6 +4,9 @@ define(["jquery","knockout"], function($,ko) {
 
 		var d = o.options;
 
+		// Режим вывода - albums или photos, выводить альбомы или фотки, если альбомы и альбом один - выводятся фотки
+		this.mode = this.asObservable(d.mode,"albums");
+
 		// порядок вывода - прямой "" или обратный "desc"
 		this.order = this.asObservable(d.order,"desc");
 
@@ -24,6 +27,9 @@ define(["jquery","knockout"], function($,ko) {
 		// если data не передана, делается запрос с этими параметрами
 		this.to_type = this.asObservable(d.to_type,0);
 		this.to_id = this.asObservable(d.to_id,0);
+
+		if (!this.to_id() && this.core.user())
+				this.to_id(this.core.user().id);
 
 		this.loading = ko.observable(false);
 		this.modalWindow = o.options.modalWindow;
@@ -52,6 +58,8 @@ define(["jquery","knockout"], function($,ko) {
 					if (result.success) {
 //						self.data({albums:result.data.albums,albumsUsers:result.data.albumsUsers});
 						self.data({albums:result.data.albums});
+						if (result.data.albums.length == 1)
+							self.mode("photos");
 					}
 					if (result.error) {
 						self.core.error(result.error);
@@ -59,6 +67,10 @@ define(["jquery","knockout"], function($,ko) {
 					self.emit("ready");
 				}
 			});
+		}
+		else if (d.hasOwnProperty("data")) {
+			if (self.data() && self.data().albums && self.data().albums.length == 1)
+				self.mode("photos");
 		}
 
 		this.albums = ko.computed(function() {
@@ -89,8 +101,31 @@ define(["jquery","knockout"], function($,ko) {
 			return ar.slice(0,self.limit());
 		});
 
+		this.photos = ko.computed(function() {
+			if (!self.data() || !self.data().albums || !self.data().albums[0] || !self.data().albums[0].photos) return [];
+			var ar = $.extend(true,[],self.data().albums[0].photos);
+			if (!ar) return [];
+			for (var i = 0; i < ar.length; i++) {
+				ar[i].open = function(photo,e) {
+					self.open({name:"photo",id:photo.id,loading:"over"},photo,e);
+				}
+			}
+			return ar;
+		});
+
+		this.photosLimited = ko.computed(function() {
+			if (!self.unlimited() && self.limit() <= 0) return [];
+			var ar = $.extend(true,[],self.photos());
+			if (self.order() == "desc") ar.reverse();
+			if (self.unlimited()) return ar;
+			return ar.slice(0,self.limit());
+		});
+
 		if (this.modalWindow) {
 			this.albumsLimited.subscribe(function() {
+				self.modalWindow.recalculatePositionTrue();
+			});
+			this.photosLimited.subscribe(function() {
 				self.modalWindow.recalculatePositionTrue();
 			});
 		}
@@ -121,15 +156,27 @@ define(["jquery","knockout"], function($,ko) {
 		}
 
 		this.showMoreEnabled = ko.computed(function() {
-			return self.albums().length > 0 && self.limit() > 0 && self.albums().length != self.albumsLimited().length;
+			if (self.mode() == "albums")
+				return self.albums().length > 0 && self.limit() > 0 && self.albums().length != self.albumsLimited().length;
+			if (self.mode() == "photos")
+				return self.photos().length > 0 && self.limit() > 0 && self.photos().length != self.photosLimited().length;
+			return false;
 		});
 
 		this.showLessEnabled = ko.computed(function() {
-			return self.albums().length>0 && self.limit() > 0;
+			if (self.mode() == "albums")
+				return self.albums().length>0 && self.limit() > 0;
+			if (self.mode() == "photos")
+				return self.photos().length>0 && self.limit() > 0;
+			return false;
 		});
 
 		this.showEnabled = ko.computed(function() {
-			return !self.unlimited() && self.albums().length > 0 && self.limit() == 0;
+			if (self.mode() == "albums")
+				return !self.unlimited() && self.albums().length > 0 && self.limit() == 0;
+			if (self.mode() == "photos")
+				return !self.unlimited() && self.photos().length > 0 && self.limit() == 0;
+			return false;
 		})
 	}
 
